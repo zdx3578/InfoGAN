@@ -90,7 +90,7 @@ class InfoGANTrainer(object):
                 print disc_log_q_c
                 disc_cross_ent = tf.reduce_mean(-disc_log_q_c_given_x)
                 print '7 disc_cross_ent'
-                pinrt disc_cross_ent
+                print disc_cross_ent
                 disc_ent = tf.reduce_mean(-disc_log_q_c)
                 disc_mi_est = disc_ent - disc_cross_ent
                 mi_est += disc_mi_est
