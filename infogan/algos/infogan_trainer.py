@@ -50,7 +50,7 @@ class InfoGANTrainer(object):
         with pt.defaults_scope(phase=pt.Phase.train):
             z_var = self.model.latent_dist.sample_prior(self.batch_size)
             print '0 batch_size'
-            print batch_size
+            print self.batch_size
             print '1 z_var'
             print z_var
             #print("1 %d | " % z_var )
