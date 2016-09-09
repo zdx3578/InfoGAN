@@ -49,6 +49,9 @@ class InfoGANTrainer(object):
 
         with pt.defaults_scope(phase=pt.Phase.train):
             z_var = self.model.latent_dist.sample_prior(self.batch_size)
+            print '1'
+            print z_var
+            #print("1 %d | " % z_var )
             fake_x, _ = self.model.generate(z_var)
             real_d, _, _, _ = self.model.discriminate(input_tensor)
             fake_d, _, fake_reg_z_dist_info, _ = self.model.discriminate(fake_x)

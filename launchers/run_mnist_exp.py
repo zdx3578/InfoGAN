@@ -38,6 +38,8 @@ if __name__ == "__main__":
         (Categorical(10), True),
         (Uniform(1, fix_std=True), True),
         (Uniform(1, fix_std=True), True),
+        (Uniform(1, fix_std=True), True),
+        (Uniform(1, fix_std=True), True),
     ]
 
     model = RegularizedGAN(
