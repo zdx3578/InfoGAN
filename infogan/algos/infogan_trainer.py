@@ -241,16 +241,19 @@ class InfoGANTrainer(object):
             log_vars = [x for _, x in self.log_vars]
             log_keys = [x for x, _ in self.log_vars]
 
-            for epoch in range(self.max_epoch):
+            for epoch in range(1):
+            #for epoch in range(self.max_epoch):
                 widgets = ["epoch #%d|" % epoch, Percentage(), Bar(), ETA()]
                 pbar = ProgressBar(maxval=self.updates_per_epoch, widgets=widgets)
                 pbar.start()
 
                 all_log_vals = []
-                for i in range(self.updates_per_epoch):
+                #for i in range(self.updates_per_epoch):
+                for i in range(1):
                     pbar.update(i)
                     x, _ = self.dataset.train.next_batch(self.batch_size)
                     feed_dict = {self.input_tensor: x}
+                    pstr('21feed_dict',feed_dict)
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
                     sess.run(self.generator_trainer, feed_dict)
                     all_log_vals.append(log_vals)
