@@ -12,3 +12,15 @@ def mkdir_p(path):
             pass
         else:
             raise
+
+def pshape(string,x):
+	print ("Shape: of '%s' is %s " % (string,x.shape,))
+	
+
+def pstr(string,x):
+	print ("STR: '%s' is %s " % (string,x,))
+
+def pall(string,x):
+	pstr(string,x)
+	pshape(string,x)
+

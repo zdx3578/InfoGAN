@@ -5,6 +5,7 @@ import numpy as np
 from progressbar import ETA, Bar, Percentage, ProgressBar
 from infogan.misc.distributions import Bernoulli, Gaussian, Categorical
 import sys
+from infogan.misc.utils import *
 
 TINY = 1e-8
 
@@ -47,22 +48,20 @@ class InfoGANTrainer(object):
     def init_opt(self):
         self.input_tensor = input_tensor = tf.placeholder(tf.float32, [self.batch_size, self.dataset.image_dim])
 
+        pstr('input_tensor',self.input_tensor)
+        
         with pt.defaults_scope(phase=pt.Phase.train):
             z_var = self.model.latent_dist.sample_prior(self.batch_size)
-            print '0 batch_size'
-            print self.batch_size
-            print '1 z_var'
-            print z_var
+            pstr('0 batch_size',self.batch_size)
+            pstr('1 z_var',z_var)
             #print("1 %d | " % z_var )
             fake_x, _ = self.model.generate(z_var)
             real_d, _, _, _ = self.model.discriminate(input_tensor)
             fake_d, _, fake_reg_z_dist_info, _ = self.model.discriminate(fake_x)
-            print '1.5 fake_reg_z_dist_info'
-            print fake_reg_z_dist_info
+            pstr('1.5 fake_reg_z_dist_info',fake_reg_z_dist_info)
 
             reg_z = self.model.reg_z(z_var)
-            print '2 reg_z'
-            print reg_z
+            pstr('2 reg_z',reg_z)
 
             discriminator_loss = - tf.reduce_mean(tf.log(real_d + TINY) + tf.log(1. - fake_d + TINY))
             generator_loss = - tf.reduce_mean(tf.log(fake_d + TINY))
@@ -77,20 +76,15 @@ class InfoGANTrainer(object):
             # discrete:
             if len(self.model.reg_disc_latent_dist.dists) > 0:
                 disc_reg_z = self.model.disc_reg_z(reg_z)
-                print '3 disc_reg_z'
-                print disc_reg_z
+                pstr('3 disc_reg_z',disc_reg_z)
                 disc_reg_dist_info = self.model.disc_reg_dist_info(fake_reg_z_dist_info)
-                print '4 disc_reg_dist_info'
-                print disc_reg_dist_info
+                pstr('4 disc_reg_dist_info',disc_reg_dist_info)
                 disc_log_q_c_given_x = self.model.reg_disc_latent_dist.logli(disc_reg_z, disc_reg_dist_info)
-                print '5 disc_log_q_c_given_x'
-                print disc_log_q_c_given_x
+                pstr('5 disc_log_q_c_given_x',disc_log_q_c_given_x)
                 disc_log_q_c = self.model.reg_disc_latent_dist.logli_prior(disc_reg_z)
-                print '6 disc_log_q_c'
-                print disc_log_q_c
+                pstr('6 disc_log_q_c',disc_log_q_c)
                 disc_cross_ent = tf.reduce_mean(-disc_log_q_c_given_x)
-                print '7 disc_cross_ent'
-                print disc_cross_ent
+                pstr('7 disc_cross_ent',disc_cross_ent)
                 disc_ent = tf.reduce_mean(-disc_log_q_c)
                 disc_mi_est = disc_ent - disc_cross_ent
                 mi_est += disc_mi_est
@@ -102,17 +96,13 @@ class InfoGANTrainer(object):
 
             if len(self.model.reg_cont_latent_dist.dists) > 0:
                 cont_reg_z = self.model.cont_reg_z(reg_z)
-                print '8 cont_reg_z'
-                print cont_reg_z
+                pstr('8 cont_reg_z',cont_reg_z)
                 cont_reg_dist_info = self.model.cont_reg_dist_info(fake_reg_z_dist_info)
-                print '9 cont_reg_dist_info'
-                print cont_reg_dist_info
+                pstr('9 cont_reg_dist_info', cont_reg_dist_info)
                 cont_log_q_c_given_x = self.model.reg_cont_latent_dist.logli(cont_reg_z, cont_reg_dist_info)
-                print '10 cont_log_q_c_given_x'
-                print cont_log_q_c_given_x
+                pstr('10 cont_log_q_c_given_x', cont_log_q_c_given_x)
                 cont_log_q_c = self.model.reg_cont_latent_dist.logli_prior(cont_reg_z)
-                print '11 cont_log_q_c'
-                print cont_log_q_c
+                pstr('11 cont_log_q_c',cont_log_q_c)
                 cont_cross_ent = tf.reduce_mean(-cont_log_q_c_given_x)
                 cont_ent = tf.reduce_mean(-cont_log_q_c)
                 cont_mi_est = cont_ent - cont_cross_ent
