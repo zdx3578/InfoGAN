@@ -271,16 +271,13 @@ class InfoGANTrainer(object):
 
 
                 data = glob(os.path.join("./data", celebA, "*.jpg"))
-                batch_idxs = min(len(data), self.train_size) // self.batch_size
-                #pstr('01 data',data)
+                batch_idxs = len(data) // self.batch_size
                 #pstr('02 batch_idxs',batch_idxs)
 
-                for idx in xrange(0, batch_idxs):
+                for i in xrange(0, batch_idxs):
                 #for i in range(self.updates_per_epoch):
-                #for i in range(1):
                     pbar.update(i)
                     #x, _ = self.dataset.train.next_batch(self.batch_size)
-                    #pstr('20.1 x',x)
                     #pstr('self.input_tensor',self.input_tensor)
 
                     batch_files = data[i*self.batch_size:(i+1)*self.batch_size]
@@ -291,7 +288,6 @@ class InfoGANTrainer(object):
                         batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
                     else:
                         batch_images = np.array(batch).astype(np.float32)
-
 
                     #feed_dict = {self.input_tensor: x}
                     feed_dict={ self.images: batch_images}
