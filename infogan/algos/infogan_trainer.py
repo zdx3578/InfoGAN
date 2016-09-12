@@ -6,6 +6,11 @@ from progressbar import ETA, Bar, Percentage, ProgressBar
 from infogan.misc.distributions import Bernoulli, Gaussian, Categorical
 import sys
 from infogan.misc.utils import *
+from infogan.misc.utils-dcgan import *
+
+from glob import glob
+
+
 
 TINY = 1e-8
 
@@ -45,8 +50,23 @@ class InfoGANTrainer(object):
         self.input_tensor = None
         self.log_vars = []
 
+        self.c_dim = 3
+        self.image_size = 108
+        self.is_crop = false
+        self.is_grayscale = (c_dim == 1)
+        self.output_size = 64
+
+
     def init_opt(self):
-        self.input_tensor = input_tensor = tf.placeholder(tf.float32, [self.batch_size, self.dataset.image_dim])
+        #self.input_tensor = input_tensor = tf.placeholder(tf.float32, [self.batch_size, self.dataset.image_dim])
+
+        self.images = tf.placeholder(tf.float32, [self.batch_size, self.c_dim])
+
+        #self.images = tf.placeholder(tf.float32, [self.batch_size] + [self.output_size, self.output_size, self.c_dim],
+                                    name='real_images')
+
+
+
 
         pstr('self.input_tensor',self.input_tensor)
         
@@ -56,7 +76,7 @@ class InfoGANTrainer(object):
             pstr('1 z_var',z_var)
             #print("1 %d | " % z_var )
             fake_x, _ = self.model.generate(z_var)
-            real_d, _, _, _ = self.model.discriminate(input_tensor)
+            real_d, _, _, _ = self.model.discriminate(self.images)
             fake_d, _, fake_reg_z_dist_info, _ = self.model.discriminate(fake_x)
             pstr('1.5 fake_reg_z_dist_info',fake_reg_z_dist_info)
 
@@ -248,13 +268,36 @@ class InfoGANTrainer(object):
                 pbar.start()
 
                 all_log_vals = []
+
+
+                data = glob(os.path.join("./data", celebA, "*.jpg"))
+                batch_idxs = min(len(data), self.train_size) // self.batch_size
+                #pstr('01 data',data)
+                #pstr('02 batch_idxs',batch_idxs)
+
+                for idx in xrange(0, batch_idxs):
                 #for i in range(self.updates_per_epoch):
-                for i in range(1):
+                #for i in range(1):
                     pbar.update(i)
-                    x, _ = self.dataset.train.next_batch(self.batch_size)
-                    pstr('20.1 x',x)
-                    pstr('self.input_tensor',self.input_tensor)
-                    feed_dict = {self.input_tensor: x}
+                    #x, _ = self.dataset.train.next_batch(self.batch_size)
+                    #pstr('20.1 x',x)
+                    #pstr('self.input_tensor',self.input_tensor)
+
+                    batch_files = data[i*self.batch_size:(i+1)*self.batch_size]
+                    batch = [get_image(batch_file, self.image_size, is_crop=self.is_crop, resize_w=self.output_size, is_grayscale = self.is_grayscale) for batch_file in batch_files]
+                    #pstr('1 batch_files',batch_files)
+                    #pstr('2 batch',batch)
+                    if (self.is_grayscale):
+                        batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
+                    else:
+                        batch_images = np.array(batch).astype(np.float32)
+
+
+                    #feed_dict = {self.input_tensor: x}
+                    feed_dict={ self.images: batch_images}
+
+
+
                     pstr('21feed_dict',feed_dict)
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
                     sess.run(self.generator_trainer, feed_dict)
@@ -268,7 +311,7 @@ class InfoGANTrainer(object):
 
                 x, _ = self.dataset.train.next_batch(self.batch_size)
 
-                summary_str = sess.run(summary_op, {self.input_tensor: x})
+                summary_str = sess.run(summary_op, {self.images: x})
                 summary_writer.add_summary(summary_str, counter)
 
                 avg_log_vals = np.mean(np.array(all_log_vals), axis=0)
