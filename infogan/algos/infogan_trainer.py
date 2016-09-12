@@ -6,7 +6,7 @@ from progressbar import ETA, Bar, Percentage, ProgressBar
 from infogan.misc.distributions import Bernoulli, Gaussian, Categorical
 import sys
 from infogan.misc.utils import *
-from infogan.misc.utils-dcgan import *
+from infogan.misc.utilsdcgan import *
 
 from glob import glob
 
