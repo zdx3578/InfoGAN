@@ -48,7 +48,7 @@ class InfoGANTrainer(object):
     def init_opt(self):
         self.input_tensor = input_tensor = tf.placeholder(tf.float32, [self.batch_size, self.dataset.image_dim])
 
-        pstr('input_tensor',self.input_tensor)
+        pstr('self.input_tensor',self.input_tensor)
         
         with pt.defaults_scope(phase=pt.Phase.train):
             z_var = self.model.latent_dist.sample_prior(self.batch_size)
@@ -252,6 +252,8 @@ class InfoGANTrainer(object):
                 for i in range(1):
                     pbar.update(i)
                     x, _ = self.dataset.train.next_batch(self.batch_size)
+                    pstr('20.1 x',x)
+                    pstr('self.input_tensor',self.input_tensor)
                     feed_dict = {self.input_tensor: x}
                     pstr('21feed_dict',feed_dict)
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
