@@ -282,19 +282,22 @@ class InfoGANTrainer(object):
 
                     batch_files = data[i*self.batch_size:(i+1)*self.batch_size]
                     batch = [get_image(batch_file, self.image_size, is_crop=self.is_crop, resize_w=self.output_size, is_grayscale = self.is_grayscale) for batch_file in batch_files]
-                    pstr('1 batch_files',batch_files)
-                    pstr('2 batch',batch)
+                    #pstr('1 batch_files',batch_files)
+                    #pstr('2 batch',batch)
                     if (self.is_grayscale):
                         batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
                     else:
                         batch_images = np.array(batch).astype(np.float32)
+
+
+                    pstr('21feed_dict',feed_dict)
 
                     #feed_dict = {self.input_tensor: x}
                     feed_dict={ self.images: batch_images}
 
 
 
-                    pstr('21feed_dict',feed_dict)
+                    
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
                     sess.run(self.generator_trainer, feed_dict)
                     all_log_vals.append(log_vals)
