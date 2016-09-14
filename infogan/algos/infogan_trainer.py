@@ -52,9 +52,10 @@ class InfoGANTrainer(object):
 
         self.c_dim = 1
         self.image_size = 108
-        self.is_crop = False
+        self.is_crop = True
         self.is_grayscale = (self.c_dim == 1)
-        self.output_size = 64
+        self.output_size = 28 
+        #64
 
 
     def init_opt(self):
