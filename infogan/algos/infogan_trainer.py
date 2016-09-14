@@ -290,7 +290,7 @@ class InfoGANTrainer(object):
                         batch_images = np.array(batch).astype(np.float32)
 
 
-                    pstr('21feed_dict',feed_dict)
+                    #pstr('21feed_dict',feed_dict)
 
                     #feed_dict = {self.input_tensor: x}
                     feed_dict={ self.images: batch_images}
