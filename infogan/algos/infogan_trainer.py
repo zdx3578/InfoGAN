@@ -276,6 +276,7 @@ class InfoGANTrainer(object):
 
                 for i in xrange(0, batch_idxs):
                 #for i in range(self.updates_per_epoch):
+                    pstr('for batch   i',i)
                     pbar.update(i)
                     #x, _ = self.dataset.train.next_batch(self.batch_size)
                     #pstr('self.input_tensor',self.input_tensor)
