@@ -4,7 +4,8 @@ import tensorflow as tf
 import infogan.misc.custom_ops
 from infogan.misc.custom_ops import leaky_rectify
 
-import infogan.misc.utils
+from infogan.misc.utils import *
+from infogan.misc.utilsdcgan import *
 
 
 class RegularizedGAN(object):
