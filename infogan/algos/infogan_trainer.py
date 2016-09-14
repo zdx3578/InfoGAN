@@ -270,7 +270,7 @@ class InfoGANTrainer(object):
                 all_log_vals = []
 
 
-                data = glob(os.path.join("./celebA",, "*.jpg"))
+                data = glob(os.path.join("./celebA", "*.jpg"))
                 batch_idxs = len(data) // self.batch_size
                 pstr('02 batch_idxs',batch_idxs)
 
