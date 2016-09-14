@@ -264,15 +264,15 @@ class InfoGANTrainer(object):
             for epoch in range(1):
             #for epoch in range(self.max_epoch):
                 widgets = ["epoch #%d|" % epoch, Percentage(), Bar(), ETA()]
-                pbar = ProgressBar(maxval=self.updates_per_epoch, widgets=widgets)
-                pbar.start()
-
-                all_log_vals = []
-
 
                 data = glob(os.path.join("./celebA", "*.jpg"))
                 batch_idxs = len(data) // self.batch_size
                 pstr('02 batch_idxs',batch_idxs)
+
+                pbar = ProgressBar(maxval=batch_idxs, widgets=widgets)
+                pbar.start()
+
+                all_log_vals = []
 
                 for i in xrange(0, batch_idxs):
                 #for i in range(self.updates_per_epoch):
