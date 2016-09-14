@@ -33,7 +33,7 @@ class RegularizedGAN(object):
         pstr('image_shape[0]',image_shape[0])
         image_size = image_shape[0]
 
-        self.image_shape = (178, 218, 1)
+        #self.image_shape = (178, 218, 1)
 
         if network_type == "mnist":
             with tf.variable_scope("d_net"):
