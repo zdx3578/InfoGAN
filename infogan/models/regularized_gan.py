@@ -5,7 +5,7 @@ import infogan.misc.custom_ops
 from infogan.misc.custom_ops import leaky_rectify
 
 from infogan.misc.utils import *
-from infogan.misc.utilsdcgan import 
+from infogan.misc.utilsdcgan import *
 
 
 class RegularizedGAN(object):
