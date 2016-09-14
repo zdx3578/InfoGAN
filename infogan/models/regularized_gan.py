@@ -5,7 +5,7 @@ import infogan.misc.custom_ops
 from infogan.misc.custom_ops import leaky_rectify
 
 from infogan.misc.utils import *
-from infogan.misc.utilsdcgan import *
+from infogan.misc.utilsdcgan import 
 
 
 class RegularizedGAN(object):
@@ -31,7 +31,7 @@ class RegularizedGAN(object):
 
         pstr('image_shape',image_shape)
         pstr('image_shape[0]',image_shape[0])
-        #image_size = image_shape[0]
+        image_size = image_shape[0]
 
         if network_type == "mnist":
             with tf.variable_scope("d_net"):
