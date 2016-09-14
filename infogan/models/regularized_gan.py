@@ -4,6 +4,8 @@ import tensorflow as tf
 import infogan.misc.custom_ops
 from infogan.misc.custom_ops import leaky_rectify
 
+import infogan.misc.utils
+
 
 class RegularizedGAN(object):
     def __init__(self, output_dist, latent_spec, batch_size, image_shape, network_type):
@@ -26,7 +28,10 @@ class RegularizedGAN(object):
         self.reg_cont_latent_dist = Product([x for x in self.reg_latent_dist.dists if isinstance(x, Gaussian)])
         self.reg_disc_latent_dist = Product([x for x in self.reg_latent_dist.dists if isinstance(x, (Categorical, Bernoulli))])
 
-        image_size = 20000
+        pstr('image_shape',image_shape)
+        pstr('image_shape[0]',image_shape[0])
+        #image_size = image_shape[0]
+
         if network_type == "mnist":
             with tf.variable_scope("d_net"):
                 shared_template = \
