@@ -272,7 +272,7 @@ class InfoGANTrainer(object):
 
                 data = glob(os.path.join("./data", celebA, "*.jpg"))
                 batch_idxs = len(data) // self.batch_size
-                #pstr('02 batch_idxs',batch_idxs)
+                pstr('02 batch_idxs',batch_idxs)
 
                 for i in xrange(0, batch_idxs):
                 #for i in range(self.updates_per_epoch):
@@ -282,8 +282,8 @@ class InfoGANTrainer(object):
 
                     batch_files = data[i*self.batch_size:(i+1)*self.batch_size]
                     batch = [get_image(batch_file, self.image_size, is_crop=self.is_crop, resize_w=self.output_size, is_grayscale = self.is_grayscale) for batch_file in batch_files]
-                    #pstr('1 batch_files',batch_files)
-                    #pstr('2 batch',batch)
+                    pstr('1 batch_files',batch_files)
+                    pstr('2 batch',batch)
                     if (self.is_grayscale):
                         batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
                     else:
