@@ -4,7 +4,7 @@ from infogan.misc.distributions import Uniform, Categorical, Gaussian, MeanBerno
 
 import tensorflow as tf
 import os
-from infogan.misc.datasets import MnistDataset
+from infogan.misc.datasets import CelebADataset
 from infogan.models.regularized_gan import RegularizedGAN
 from infogan.algos.infogan_trainer import InfoGANTrainer
 from infogan.misc.utils import mkdir_p
@@ -31,7 +31,7 @@ if __name__ == "__main__":
     mkdir_p(log_dir)
     mkdir_p(checkpoint_dir)
 
-    dataset = MnistDataset()
+    dataset = CelebADataset()
 
     latent_spec = [
         (Uniform(62), False),

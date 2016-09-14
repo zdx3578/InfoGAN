@@ -50,10 +50,10 @@ class InfoGANTrainer(object):
         self.input_tensor = None
         self.log_vars = []
 
-        self.c_dim = 3
+        self.c_dim = 1
         self.image_size = 108
-        self.is_crop = false
-        self.is_grayscale = (c_dim == 1)
+        self.is_crop = False
+        self.is_grayscale = (self.c_dim == 1)
         self.output_size = 64
 
 

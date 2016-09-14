@@ -26,7 +26,7 @@ class RegularizedGAN(object):
         self.reg_cont_latent_dist = Product([x for x in self.reg_latent_dist.dists if isinstance(x, Gaussian)])
         self.reg_disc_latent_dist = Product([x for x in self.reg_latent_dist.dists if isinstance(x, (Categorical, Bernoulli))])
 
-        image_size = image_shape[0]
+        image_size = 20000
         if network_type == "mnist":
             with tf.variable_scope("d_net"):
                 shared_template = \

@@ -52,6 +52,13 @@ class Dataset(object):
         else:
             return self._images[start:end], self._labels[start:end]
 
+class CelebADataset():
+    def __init__(self):
+        data_directory = "CelebA"
+
+        self.image_dim = 178 * 218
+        self.image_shape = (178, 218, 3)
+
 
 class MnistDataset(object):
     def __init__(self):
