@@ -61,7 +61,7 @@ class InfoGANTrainer(object):
     def init_opt(self):
         #self.input_tensor = input_tensor = tf.placeholder(tf.float32, [self.batch_size, self.dataset.image_dim])
 
-        self.images = tf.placeholder(tf.float32, [self.batch_size, 28,28,1])
+        self.images = tf.placeholder(tf.float32, [self.batch_size, 178,218,1])
 
         #self.images = tf.placeholder(tf.float32, [self.batch_size] + [self.output_size, self.output_size, self.c_dim],               name='real_images')
 
@@ -282,7 +282,7 @@ class InfoGANTrainer(object):
                     #pstr('self.input_tensor',self.input_tensor)
 
                     batch_files = data[i*self.batch_size:(i+1)*self.batch_size]
-                    batch = [get_image(batch_file, self.image_size, is_crop=self.is_crop, resize_w=self.output_size, is_grayscale = self.is_grayscale) for batch_file in batch_files]
+                    batch = [get_image(batch_file, self.image_size, is_crop=False, resize_w=self.output_size, is_grayscale = self.is_grayscale) for batch_file in batch_files]
                     #pstr('1 batch_files',batch_files)
                     #pstr('2 batch',batch)
                     if (self.is_grayscale):
