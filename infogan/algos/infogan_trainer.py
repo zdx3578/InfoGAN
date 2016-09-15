@@ -62,7 +62,7 @@ class InfoGANTrainer(object):
         #self.input_tensor = input_tensor = tf.placeholder(tf.float32, [self.batch_size, self.dataset.image_dim])
 
         #self.images = tf.placeholder(tf.float32, [self.batch_size, self.image_size,self.image_size,1])
-        elf.images = tf.placeholder(tf.float32, [self.batch_size, 148,148,1])
+        self.images = tf.placeholder(tf.float32, [self.batch_size, 148,148,1])
         #self.images = tf.placeholder(tf.float32, [self.batch_size] + [self.output_size, self.output_size, self.c_dim],               name='real_images')
 
 
