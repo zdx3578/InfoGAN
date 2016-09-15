@@ -308,7 +308,7 @@ class InfoGANTrainer(object):
 
                 #x, _ = self.dataset.train.next_batch(self.batch_size)
                 #batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
-                    if counter == (self.updates_per_epoch - 1)
+                    if counter == (self.updates_per_epoch - 1):
                         summary_str = sess.run(summary_op, { self.images: batch_images})
                         summary_writer.add_summary(summary_str, counter)
 
