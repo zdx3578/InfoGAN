@@ -309,7 +309,7 @@ class InfoGANTrainer(object):
                         print("Model saved in file: %s" % fn)
 
                 epochc += 1
-                batch_files = data[(epochc * updates_per_epoch + i)*self.batch_size:(epochc * updates_per_epoch + i+1)*self.batch_size]
+                batch_files = data[(epochc * self.updates_per_epoch + i)*self.batch_size:(epochc * self.updates_per_epoch + i+1)*self.batch_size]
                 batch = [get_image(batch_file, self.image_size, is_crop=True, resize_w=self.output_size, is_grayscale = self.is_grayscale) for batch_file in batch_files]
  
                 #x, _ = self.dataset.train.next_batch(self.batch_size)
