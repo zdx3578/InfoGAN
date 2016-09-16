@@ -20,8 +20,8 @@ if __name__ == "__main__":
     root_log_dir = "logs/mnist"
     root_checkpoint_dir = "ckt/mnist"
     
-    #batch_size = 100
-    batch_size = 60
+    #!!!!!batch_size = 128
+    batch_size = 120
     #updates_per_epoch = 100
     updates_per_epoch = 6
     #max_epoch = 20
