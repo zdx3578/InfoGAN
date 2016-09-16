@@ -258,6 +258,7 @@ class InfoGANTrainer(object):
             saver = tf.train.Saver()
 
             counter = 0
+            epochc = 0
 
             log_vars = [x for _, x in self.log_vars]
             log_keys = [x for x, _ in self.log_vars]
@@ -307,17 +308,27 @@ class InfoGANTrainer(object):
                         fn = saver.save(sess, "%s/%s.ckpt" % (self.checkpoint_dir, snapshot_name))
                         print("Model saved in file: %s" % fn)
 
+                epochc += 1
+                batch_files = data[(epochc * updates_per_epoch + i)*self.batch_size:((epochc * updates_per_epoch + i+1)*self.batch_size]
+                batch = [get_image(batch_file, self.image_size, is_crop=True, resize_w=self.output_size, is_grayscale = self.is_grayscale) for batch_file in batch_files]
+ 
                 #x, _ = self.dataset.train.next_batch(self.batch_size)
+                if (self.is_grayscale):
+                        batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
+                    else:
+                        batch_images = np.array(batch).astype(np.float32)
                 #batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
-                    if counter == (self.updates_per_epoch - 1):
-                        summary_str = sess.run(summary_op, { self.images: batch_images})
-                        summary_writer.add_summary(summary_str, counter)
+                    #if counter == (self.updates_per_epoch - 1):
+                
 
-                        avg_log_vals = np.mean(np.array(all_log_vals), axis=0)
-                        log_dict = dict(zip(log_keys, avg_log_vals))
+                summary_str = sess.run(summary_op, { self.images: batch_images})
+                summary_writer.add_summary(summary_str, counter)
 
-                        log_line = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals))
-                        print("Epoch %d | " % (epoch) + log_line)
-                        sys.stdout.flush()
-                        if np.any(np.isnan(avg_log_vals)):
-                            raise ValueError("NaN detected!")
+                avg_log_vals = np.mean(np.array(all_log_vals), axis=0)
+                log_dict = dict(zip(log_keys, avg_log_vals))
+
+                log_line = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals))
+                print("Epoch %d | " % (epoch) + log_line)
+                sys.stdout.flush()
+                if np.any(np.isnan(avg_log_vals)):
+                    raise ValueError("NaN detected!")
