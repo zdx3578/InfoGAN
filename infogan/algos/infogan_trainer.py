@@ -314,9 +314,9 @@ class InfoGANTrainer(object):
  
                 #x, _ = self.dataset.train.next_batch(self.batch_size)
                 if (self.is_grayscale):
-                        batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
-                    else:
-                        batch_images = np.array(batch).astype(np.float32)
+                    batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
+                else:
+                    batch_images = np.array(batch).astype(np.float32)
                 #batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
                     #if counter == (self.updates_per_epoch - 1):
                 
