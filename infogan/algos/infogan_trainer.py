@@ -23,7 +23,7 @@ class InfoGANTrainer(object):
                  exp_name="experiment",
                  log_dir="logs",
                  checkpoint_dir="ckt",
-                 restore_checkpoint_file="tmp"
+                 restore_checkpoint_file="tmp",
                  max_epoch=100,
                  updates_per_epoch=100,
                  snapshot_interval=325,
