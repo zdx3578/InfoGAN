@@ -24,6 +24,7 @@ class InfoGANTrainer(object):
                  log_dir="logs",
                  checkpoint_dir="ckt",
                  restore_checkpoint_file="tmp",
+                 isrestore=False,
                  max_epoch=100,
                  updates_per_epoch=100,
                  snapshot_interval=325,
@@ -42,6 +43,8 @@ class InfoGANTrainer(object):
         self.log_dir = log_dir
         self.checkpoint_dir = checkpoint_dir
         self.restore_checkpoint_file = restore_checkpoint_file
+        self.isrestore = isrestore
+
         self.snapshot_interval = snapshot_interval
         self.updates_per_epoch = updates_per_epoch
         self.generator_learning_rate = generator_learning_rate
@@ -259,7 +262,7 @@ class InfoGANTrainer(object):
 
             saver = tf.train.Saver()
 
-            if  self.restore_checkpoint_file:
+            if  self.isrestore  and  self.restore_checkpoint_file:
                 saver.restore(sess, self.restore_checkpoint_file)
                 print("Model restored.")
 
