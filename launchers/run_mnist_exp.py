@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
     log_dir = os.path.join(root_log_dir, exp_name)
     checkpoint_dir = os.path.join(root_checkpoint_dir, exp_name)
-    restore_checkpoint_file = os.path.join(checkpoint_dir, "mnist_2016_09_16_15_29_24_1455.ckpt"）
+    restore_checkpoint_file = os.path.join(checkpoint_dir, "mnist_2016_09_16_15_29_24_1455.ckpt")
 
     mkdir_p(log_dir)
     mkdir_p(checkpoint_dir)
