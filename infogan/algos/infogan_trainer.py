@@ -308,7 +308,11 @@ class InfoGANTrainer(object):
 
 
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
-                    sess.run(self.generator_trainer, feed_dict)
+                    gencount=0
+                    for i in range(3):
+                        gencount += 1
+                        print gencount
+                        sess.run(self.generator_trainer, feed_dict)
                     all_log_vals.append(log_vals)
                     counter += 1
 
