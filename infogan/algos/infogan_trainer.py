@@ -259,8 +259,8 @@ class InfoGANTrainer(object):
 
             saver = tf.train.Saver()
 
-            if  restore_checkpoint_file:
-                saver.restore(sess, ckpt.model_checkpoint_path)
+            if  self.restore_checkpoint_file:
+                saver.restore(sess, self.restore_checkpoint_file)
                 print("Model restored.")
 
             counter = 0
