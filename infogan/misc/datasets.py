@@ -84,9 +84,9 @@ class MnistDataset(object):
         )
         self.test = dataset.test
         self.validation = dataset.validation
-        self.image_dim = 148 * 148
+        self.image_dim = 128 * 128
         #self.image_shape = (28, 28, 1)
-        self.image_shape = (148, 148, 1)
+        self.image_shape = (128, 128, 1)
 
     def transform(self, data):
         return data
