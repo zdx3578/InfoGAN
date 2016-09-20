@@ -25,7 +25,7 @@ if __name__ == "__main__":
     #batch_size = 120
     updates_per_epoch = 50
     #updates_per_epoch = 3
-    max_epoch = 41
+    max_epoch = 61
     #max_epoch = 2
 
 
