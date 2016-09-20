@@ -82,8 +82,11 @@ class InfoGANTrainer(object):
             pstr('1 z_var',z_var)
             #print("1 %d | " % z_var )
             fake_x, _ = self.model.generate(z_var)
+            pstr('1.1 fake_x',fake_x)
             real_d, _, _, _ = self.model.discriminate(self.images)
             fake_d, _, fake_reg_z_dist_info, _ = self.model.discriminate(fake_x)
+
+            pstr('1.1 fake_d',fake_d)
             pstr('1.5 fake_reg_z_dist_info',fake_reg_z_dist_info)
 
             reg_z = self.model.reg_z(z_var)
@@ -139,6 +142,8 @@ class InfoGANTrainer(object):
                 discriminator_loss -= self.info_reg_coeff * cont_mi_est
                 generator_loss -= self.info_reg_coeff * cont_mi_est
 
+            pstr('1.1 generator_loss',generator_loss)
+
             for idx, dist_info in enumerate(self.model.reg_latent_dist.split_dist_info(fake_reg_z_dist_info)):
                 if "stddev" in dist_info:
                     self.log_vars.append(("max_std_%d" % idx, tf.reduce_max(dist_info["stddev"])))
@@ -150,6 +155,8 @@ class InfoGANTrainer(object):
             all_vars = tf.trainable_variables()
             d_vars = [var for var in all_vars if var.name.startswith('d_')]
             g_vars = [var for var in all_vars if var.name.startswith('g_')]
+
+            pstr('1.1 g_vars',g_vars)
 
             self.log_vars.append(("max_real_d", tf.reduce_max(real_d)))
             self.log_vars.append(("min_real_d", tf.reduce_min(real_d)))
