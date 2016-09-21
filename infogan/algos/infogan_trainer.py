@@ -294,7 +294,7 @@ class InfoGANTrainer(object):
                 #if epochc * self.updates_per_epoch > 190000 :
                  #   epochc = 0
 
-                print("epochc %d  , batch_files %d " % (epochc, (epochc * self.updates_per_epoch )*self.batch_size  ))
+                #print("epochc %d  , batch_files %d " % (epochc, (epochc * self.updates_per_epoch )*self.batch_size  ))
 
                 for i in range(self.updates_per_epoch):
                     #print("epochc %d , batch  %d , batch_files %d " % (epochc,i, (epochc * self.updates_per_epoch + i)*self.batch_size  ))
