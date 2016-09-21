@@ -24,12 +24,12 @@ if __name__ == "__main__":
     #batch_size = 128
     batch_size = 128
     #updates_per_epoch = 50
-    updates_per_epoch = 3
+    updates_per_epoch = 50
     #max_epoch = 122
-    max_epoch = 2
+    max_epoch = 122
     #snapshot_interval = 5000
-    snapshot_interval = 5
-    ganlp=2
+    snapshot_interval = 5000
+    ganlp=4
     #ganlp=4
 
 

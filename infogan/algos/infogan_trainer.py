@@ -284,10 +284,10 @@ class InfoGANTrainer(object):
                     batch_images  = self.dataset.next_batch(self.batch_size)
                     feed_dict={ self.images: batch_images}
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
-                    gencount=0
+                    #gencount=0
                     for j in range(self.ganlp):
-                        gencount += 1
-                        print gencount
+                        #gencount += 1
+                        #print gencount
                         sess.run(self.generator_trainer, feed_dict)
                     all_log_vals.append(log_vals)
                     counter += 1
