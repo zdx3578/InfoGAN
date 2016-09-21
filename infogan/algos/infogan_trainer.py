@@ -55,23 +55,14 @@ class InfoGANTrainer(object):
         self.input_tensor = None
         self.log_vars = []
 
-        self.c_dim = 3
-        self.image_size = 128
-        self.is_crop = True
-        self.is_grayscale = (self.c_dim == 1)
-        self.output_size = 128 
-        #64
+
 
 
     def init_opt(self):
         #self.input_tensor = input_tensor = tf.placeholder(tf.float32, [self.batch_size, self.dataset.image_dim])
         #self.images = tf.placeholder(tf.float32, [self.batch_size, self.image_size,self.image_size,1])
 
-        self.images = tf.placeholder(tf.float32, [self.batch_size, 128, 128, self.c_dim ])
-
-        #self.images = tf.placeholder(tf.float32, [self.batch_size] + [self.output_size, self.output_size, self.c_dim],               name='real_images')
-
-
+        self.images = tf.placeholder(tf.float32, [self.batch_size, self.dataset.image_size, self.dataset.image_size, self.dataset.c_dim ])
 
 
         pstr('self.input_tensor',self.input_tensor)
@@ -279,10 +270,6 @@ class InfoGANTrainer(object):
             log_vars = [x for _, x in self.log_vars]
             log_keys = [x for x, _ in self.log_vars]
 
-
-            #data = glob(os.path.join("./celebA", "*.jpg"))
-            #batch_idxs = len(data) // self.batch_size
-
             for epoch in range(self.max_epoch):
                 widgets = ["epoch #%d|" % epoch, Percentage(), Bar(), ETA()]
 
@@ -291,33 +278,14 @@ class InfoGANTrainer(object):
 
                 all_log_vals = []
 
-                #if epochc * self.updates_per_epoch > 190000 :
-                 #   epochc = 0
-                ganlp=2
+                ganlp=4
                 pstr('ganlp',ganlp)
-
-                #print("epochc %d  , batch_files %d " % (epochc, (epochc * self.updates_per_epoch )*self.batch_size  ))
-
+                
                 for i in range(self.updates_per_epoch):
-                    #print("epochc %d , batch  %d , batch_files %d " % (epochc,i, (epochc * self.updates_per_epoch + i)*self.batch_size  ))
-                    #pstr('for batch   i',i)
                     pbar.update(i)
 
-                    #batch_files = data[(epochc * self.updates_per_epoch + i)*self.batch_size:(epochc * self.updates_per_epoch + i+1)*self.batch_size]
-                    #batch = [get_image(batch_file, self.image_size, is_crop=True, resize_w=self.output_size, is_grayscale = self.is_grayscale) for batch_file in batch_files]
-                    #pstr('1 batch_files',(epochc * self.updates_per_epoch + i)*self.batch_size)
-
-                    batch  = self.dataset.next_batch(self.batch_size)
-
-
-                    if (self.is_grayscale):
-                        batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
-                    else:
-                        batch_images = np.array(batch).astype(np.float32)
-
-                    #feed_dict = {self.input_tensor: x}
+                    batch_images  = self.dataset.next_batch(self.batch_size)
                     feed_dict={ self.images: batch_images}
-
 
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
                     #gencount=0
@@ -334,20 +302,13 @@ class InfoGANTrainer(object):
                         fn = saver.save(sess, "%s/%s.ckpt" % (self.checkpoint_dir, snapshot_name))
                         print("Model saved in file: %s" % fn)
 
-                
 
                 batch  = self.dataset.next_batch(self.batch_size)
-                #batch_files = data[(epochc * self.updates_per_epoch + i)*self.batch_size:(epochc * self.updates_per_epoch + i+1)*self.batch_size]
-                #batch = [get_image(batch_file, self.image_size, is_crop=True, resize_w=self.output_size, is_grayscale = self.is_grayscale) for batch_file in batch_files]
- 
-                #x, _ = self.dataset.train.next_batch(self.batch_size)
+
                 if (self.is_grayscale):
                     batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
                 else:
                     batch_images = np.array(batch).astype(np.float32)
-                #batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
-                    #if counter == (self.updates_per_epoch - 1):
-                #epochc += 1
 
 
                 summary_str = sess.run(summary_op, { self.images: batch_images})
