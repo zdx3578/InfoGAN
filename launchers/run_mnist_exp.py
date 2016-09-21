@@ -26,7 +26,7 @@ if __name__ == "__main__":
     #updates_per_epoch = 50
     updates_per_epoch = 50
     #max_epoch = 122
-    max_epoch = 122
+    max_epoch = 201
     #snapshot_interval = 5000
     snapshot_interval = 5000
     ganlp=4
