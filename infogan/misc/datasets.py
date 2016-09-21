@@ -72,6 +72,8 @@ class CelebADataset():
         self.c_dim = 3
         self.is_crop = True
         self.is_grayscale = (self.c_dim == 1)
+        self.image_size = self.image_shape[0]
+        self.output_size = self.image_shape[0] 
 
     def next_batch(self, batch_size):
         """Return the next `batch_size` examples from this data set."""
