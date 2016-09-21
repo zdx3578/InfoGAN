@@ -95,8 +95,14 @@ class CelebADataset():
         batch_files = data[start:end]
         batch = [get_image(batch_file, self.image_shape[0], is_crop=True, resize_w=self.image_shape[0], is_grayscale = self.is_grayscale) for batch_file in batch_files]
                     
-
         return batch
+
+        
+    def transform(self, data):
+        return data
+
+    def inverse_transform(self, data):
+        return data
 
 
 
