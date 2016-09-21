@@ -23,11 +23,12 @@ if __name__ == "__main__":
     #!!!!!
     #batch_size = 128
     batch_size = 128
-    updates_per_epoch = 50
-    #updates_per_epoch = 3
-    max_epoch = 122
-    #max_epoch = 2
-    snapshot_interval = 5000
+    #updates_per_epoch = 50
+    updates_per_epoch = 3
+    #max_epoch = 122
+    max_epoch = 2
+    #snapshot_interval = 5000
+    snapshot_interval = 5
 
 
     exp_name = "mnist_%s" % timestamp
