@@ -3,6 +3,10 @@ from tensorflow.examples.tutorials import mnist
 import os
 import numpy as np
 
+from infogan.misc.utils import *
+from infogan.misc.utilsdcgan import *
+
+
 
 class Dataset(object):
     def __init__(self, images, labels=None):
@@ -54,10 +58,45 @@ class Dataset(object):
 
 class CelebADataset():
     def __init__(self):
-        data_directory = "CelebA"
+        data_directory = "./celebA"
+        self._data = glob(os.path.join(data_directory, "*.jpg"))
+        self._num_examples = len(self.data)
+        self._index_in_epoch = self._num_examples - 2000
+        self._epochs_completed = -1
 
-        self.image_dim = 178 * 218
-        self.image_shape = (178, 218, 3)
+        self.image_dim = 128 * 128
+        #self.image_shape = (28, 28, 1)
+        self.image_shape = (128, 128, 1)
+
+        self.c_dim = 3
+        self.is_crop = True
+        self.is_grayscale = (self.c_dim == 1)
+
+    def next_batch(self, batch_size):
+        """Return the next `batch_size` examples from this data set."""
+        start = self._index_in_epoch
+        self._index_in_epoch += batch_size
+        if self._index_in_epoch > self._num_examples:
+            # Finished epoch
+            self._epochs_completed += 1
+            # Shuffle the data
+            perm = np.arange(self._num_examples)
+            np.random.shuffle(perm)
+            self._data = self._data[perm]
+
+            # Start next epoch
+            start = 0
+            self._index_in_epoch = batch_size
+            assert batch_size <= self._num_examples
+        end = self._index_in_epoch
+        pstr('end ',end)
+
+        batch_files = data[start:end]
+        batch = [get_image(batch_file, self.image_shape[0], is_crop=True, resize_w=self.image_shape[0], is_grayscale = self.is_grayscale) for batch_file in batch_files]
+                    
+
+        return batch
+
 
 
 class MnistDataset(object):

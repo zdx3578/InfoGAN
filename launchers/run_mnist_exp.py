@@ -39,7 +39,7 @@ if __name__ == "__main__":
     mkdir_p(log_dir)
     mkdir_p(checkpoint_dir)
 
-    dataset = MnistDataset()
+    dataset = CelebADataset()
 
     latent_spec = [
         (Uniform(62), False),
