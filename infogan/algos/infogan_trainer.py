@@ -27,7 +27,7 @@ class InfoGANTrainer(object):
                  isrestore=False,
                  max_epoch=100,
                  updates_per_epoch=100,
-                 snapshot_interval=1000,
+                 snapshot_interval=11210,
                  info_reg_coeff=1.0,
                  discriminator_learning_rate=2e-4,
                  generator_learning_rate=2e-4,
@@ -295,7 +295,8 @@ class InfoGANTrainer(object):
                     epochc = 0
 
                 for i in range(self.updates_per_epoch):
-                    pstr('for batch   i',i)
+                    print("epochc %d , batch  %d " % (epochc,i ))
+                    #pstr('for batch   i',i)
                     pbar.update(i)
 
                     batch_files = data[(epochc * self.updates_per_epoch + i)*self.batch_size:(epochc * self.updates_per_epoch + i+1)*self.batch_size]
@@ -313,7 +314,7 @@ class InfoGANTrainer(object):
 
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
                     gencount=0
-                    for j in range(3):
+                    for j in range(1):
                         gencount += 1
                         print gencount
                         sess.run(self.generator_trainer, feed_dict)
@@ -349,5 +350,6 @@ class InfoGANTrainer(object):
                 log_line = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals))
                 print("Epoch %d | " % (epoch) + log_line)
                 sys.stdout.flush()
+                pstr('avg_log_vals',avg_log_vals)
                 if np.any(np.isnan(avg_log_vals)):
                     raise ValueError("NaN detected!")
