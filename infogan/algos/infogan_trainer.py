@@ -28,7 +28,7 @@ class InfoGANTrainer(object):
                  max_epoch=100,
                  updates_per_epoch=100,
                  snapshot_interval=4000,
-                 ganlp=1
+                 ganlp=1,
                  info_reg_coeff=1.0,
                  discriminator_learning_rate=2e-4,
                  generator_learning_rate=2e-4,
