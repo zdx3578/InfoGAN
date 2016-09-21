@@ -55,7 +55,7 @@ class InfoGANTrainer(object):
         self.input_tensor = None
         self.log_vars = []
 
-        self.c_dim = 1
+        self.c_dim = 3
         self.image_size = 128
         self.is_crop = True
         self.is_grayscale = (self.c_dim == 1)
@@ -67,7 +67,7 @@ class InfoGANTrainer(object):
         #self.input_tensor = input_tensor = tf.placeholder(tf.float32, [self.batch_size, self.dataset.image_dim])
         #self.images = tf.placeholder(tf.float32, [self.batch_size, self.image_size,self.image_size,1])
 
-        self.images = tf.placeholder(tf.float32, [self.batch_size, 128, 128, 1])
+        self.images = tf.placeholder(tf.float32, [self.batch_size, 128, 128, self.c_dim ])
 
         #self.images = tf.placeholder(tf.float32, [self.batch_size] + [self.output_size, self.output_size, self.c_dim],               name='real_images')
 
@@ -318,11 +318,11 @@ class InfoGANTrainer(object):
 
 
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
-                    gencount=0
-                    for j in range(1):
-                        gencount += 1
+                    #gencount=0
+                    #for j in range(1):
+                        #gencount += 1
                         #print gencount
-                        sess.run(self.generator_trainer, feed_dict)
+                    sess.run(self.generator_trainer, feed_dict)
 
                     all_log_vals.append(log_vals)
                     counter += 1

@@ -67,9 +67,9 @@ class CelebADataset():
 
         self.image_dim = 128 * 128
         #self.image_shape = (28, 28, 1)
-        self.image_shape = (128, 128, 1)
+        self.image_shape = (128, 128, 3)
 
-        self.c_dim = 1
+        self.c_dim = 3
         self.is_crop = True
         self.is_grayscale = (self.c_dim == 1)
 

@@ -21,9 +21,9 @@ if __name__ == "__main__":
     root_checkpoint_dir = "ckt/mnist"
     
     #!!!!!
-    batch_size = 128
-    #batch_size = 120
-    updates_per_epoch = 200
+    #batch_size = 128
+    #batch_size = 64
+    updates_per_epoch = 100
     #updates_per_epoch = 3
     max_epoch = 122
     #max_epoch = 2
