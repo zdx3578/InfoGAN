@@ -28,6 +28,7 @@ class InfoGANTrainer(object):
                  max_epoch=100,
                  updates_per_epoch=100,
                  snapshot_interval=4000,
+                 ganlp=1
                  info_reg_coeff=1.0,
                  discriminator_learning_rate=2e-4,
                  generator_learning_rate=2e-4,
@@ -54,6 +55,7 @@ class InfoGANTrainer(object):
         self.generator_trainer = None
         self.input_tensor = None
         self.log_vars = []
+        self.ganlp = ganlp
 
 
 
@@ -276,17 +278,16 @@ class InfoGANTrainer(object):
                 pbar.start()
                 all_log_vals = []
 
-                ganlp=4
-                pstr('ganlp',ganlp)
+                pstr('ganlp',self.ganlp)
                 for i in range(self.updates_per_epoch):
                     pbar.update(i)
                     batch_images  = self.dataset.next_batch(self.batch_size)
                     feed_dict={ self.images: batch_images}
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
-                    #gencount=0
-                    for j in range(ganlp):
-                        #gencount += 1
-                        #print gencount
+                    gencount=0
+                    for j in range(self.ganlp):
+                        gencount += 1
+                        print gencount
                         sess.run(self.generator_trainer, feed_dict)
                     all_log_vals.append(log_vals)
                     counter += 1
