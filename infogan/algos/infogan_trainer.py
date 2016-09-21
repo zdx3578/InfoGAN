@@ -318,7 +318,7 @@ class InfoGANTrainer(object):
                     gencount=0
                     for j in range(1):
                         gencount += 1
-                        print gencount
+                        #print gencount
                         sess.run(self.generator_trainer, feed_dict)
 
                     all_log_vals.append(log_vals)
