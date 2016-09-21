@@ -282,13 +282,10 @@ class InfoGANTrainer(object):
 
             data = glob(os.path.join("./celebA", "*.jpg"))
             #batch_idxs = len(data) // self.batch_size
-            #pstr('02 batch_idxs',batch_idxs)
 
-            #for epoch in range(1):
             for epoch in range(self.max_epoch):
                 widgets = ["epoch #%d|" % epoch, Percentage(), Bar(), ETA()]
 
-                #pbar = ProgressBar(maxval=batch_idxs, widgets=widgets)
                 pbar = ProgressBar(maxval=self.updates_per_epoch, widgets=widgets)
                 pbar.start()
 
@@ -297,17 +294,14 @@ class InfoGANTrainer(object):
                 if epochc * self.updates_per_epoch > 190000 :
                     epochc = 0
 
-                #for i in xrange(0, batch_idxs):
                 for i in range(self.updates_per_epoch):
                     pstr('for batch   i',i)
                     pbar.update(i)
-                    #x, _ = self.dataset.train.next_batch(self.batch_size)
-                    #pstr('self.input_tensor',self.input_tensor)
 
                     batch_files = data[(epochc * self.updates_per_epoch + i)*self.batch_size:(epochc * self.updates_per_epoch + i+1)*self.batch_size]
                     batch = [get_image(batch_file, self.image_size, is_crop=True, resize_w=self.output_size, is_grayscale = self.is_grayscale) for batch_file in batch_files]
                     pstr('1 batch_files',(epochc * self.updates_per_epoch + i)*self.batch_size)
-                    #pstr('2 batch',batch)
+
                     if (self.is_grayscale):
                         batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
                     else:
