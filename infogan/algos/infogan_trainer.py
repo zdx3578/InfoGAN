@@ -55,7 +55,7 @@ class InfoGANTrainer(object):
         self.input_tensor = None
         self.log_vars = []
 
-        self.c_dim = 3
+        self.c_dim = 1
         self.image_size = 128
         self.is_crop = True
         self.is_grayscale = (self.c_dim == 1)
@@ -67,7 +67,7 @@ class InfoGANTrainer(object):
         #self.input_tensor = input_tensor = tf.placeholder(tf.float32, [self.batch_size, self.dataset.image_dim])
         #self.images = tf.placeholder(tf.float32, [self.batch_size, self.image_size,self.image_size,1])
 
-        self.images = tf.placeholder(tf.float32, [self.batch_size, 128, 128, 3])
+        self.images = tf.placeholder(tf.float32, [self.batch_size, 128, 128, 1])
 
         #self.images = tf.placeholder(tf.float32, [self.batch_size] + [self.output_size, self.output_size, self.c_dim],               name='real_images')
 
