@@ -272,44 +272,31 @@ class InfoGANTrainer(object):
 
             for epoch in range(self.max_epoch):
                 widgets = ["epoch #%d|" % epoch, Percentage(), Bar(), ETA()]
-
                 pbar = ProgressBar(maxval=self.updates_per_epoch, widgets=widgets)
                 pbar.start()
-
                 all_log_vals = []
 
                 ganlp=4
                 pstr('ganlp',ganlp)
-                
                 for i in range(self.updates_per_epoch):
                     pbar.update(i)
-
                     batch_images  = self.dataset.next_batch(self.batch_size)
                     feed_dict={ self.images: batch_images}
-
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
                     #gencount=0
                     for j in range(ganlp):
                         #gencount += 1
                         #print gencount
                         sess.run(self.generator_trainer, feed_dict)
-
                     all_log_vals.append(log_vals)
                     counter += 1
-
                     if counter % self.snapshot_interval == 0:
                         snapshot_name = "%s_%s" % (self.exp_name, str(counter))
                         fn = saver.save(sess, "%s/%s.ckpt" % (self.checkpoint_dir, snapshot_name))
                         print("Model saved in file: %s" % fn)
 
 
-                batch  = self.dataset.next_batch(self.batch_size)
-
-                if (self.is_grayscale):
-                    batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
-                else:
-                    batch_images = np.array(batch).astype(np.float32)
-
+                batch_images  = self.dataset.next_batch(self.batch_size)
 
                 summary_str = sess.run(summary_op, { self.images: batch_images})
                 summary_writer.add_summary(summary_str, counter)
