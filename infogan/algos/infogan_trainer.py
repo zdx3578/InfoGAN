@@ -27,7 +27,7 @@ class InfoGANTrainer(object):
                  isrestore=False,
                  max_epoch=100,
                  updates_per_epoch=100,
-                 snapshot_interval=11210,
+                 snapshot_interval=4000,
                  info_reg_coeff=1.0,
                  discriminator_learning_rate=2e-4,
                  generator_learning_rate=2e-4,
@@ -294,14 +294,16 @@ class InfoGANTrainer(object):
                 if epochc * self.updates_per_epoch > 190000 :
                     epochc = 0
 
+                print("epochc %d  , batch_files %d " % (epochc,, (epochc * self.updates_per_epoch )*self.batch_size  ))
+
                 for i in range(self.updates_per_epoch):
-                    print("epochc %d , batch  %d " % (epochc,i ))
+                    #print("epochc %d , batch  %d , batch_files %d " % (epochc,i, (epochc * self.updates_per_epoch + i)*self.batch_size  ))
                     #pstr('for batch   i',i)
                     pbar.update(i)
 
                     batch_files = data[(epochc * self.updates_per_epoch + i)*self.batch_size:(epochc * self.updates_per_epoch + i+1)*self.batch_size]
                     batch = [get_image(batch_file, self.image_size, is_crop=True, resize_w=self.output_size, is_grayscale = self.is_grayscale) for batch_file in batch_files]
-                    pstr('1 batch_files',(epochc * self.updates_per_epoch + i)*self.batch_size)
+                    #pstr('1 batch_files',(epochc * self.updates_per_epoch + i)*self.batch_size)
 
                     if (self.is_grayscale):
                         batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
