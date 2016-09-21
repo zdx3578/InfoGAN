@@ -86,7 +86,7 @@ if __name__ == "__main__":
         isrestore=isrestore,
         restore_checkpoint_file=restore_checkpoint_file,
         snapshot_interval=snapshot_interval,
-        ganlp=ganlp，
+        ganlp=ganlp,
         max_epoch=max_epoch,
         updates_per_epoch=updates_per_epoch,
         info_reg_coeff=1.0,
