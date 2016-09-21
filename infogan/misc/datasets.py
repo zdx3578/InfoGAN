@@ -5,6 +5,7 @@ import numpy as np
 
 from infogan.misc.utils import *
 from infogan.misc.utilsdcgan import *
+from glob import glob
 
 
 
