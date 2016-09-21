@@ -293,6 +293,8 @@ class InfoGANTrainer(object):
 
                 #if epochc * self.updates_per_epoch > 190000 :
                  #   epochc = 0
+                ganlp=2
+                pstr('ganlp',ganlp)
 
                 #print("epochc %d  , batch_files %d " % (epochc, (epochc * self.updates_per_epoch )*self.batch_size  ))
 
@@ -319,10 +321,10 @@ class InfoGANTrainer(object):
 
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
                     #gencount=0
-                    #for j in range(1):
+                    for j in range(ganlp):
                         #gencount += 1
                         #print gencount
-                    sess.run(self.generator_trainer, feed_dict)
+                        sess.run(self.generator_trainer, feed_dict)
 
                     all_log_vals.append(log_vals)
                     counter += 1

@@ -27,6 +27,7 @@ if __name__ == "__main__":
     #updates_per_epoch = 3
     max_epoch = 122
     #max_epoch = 2
+    snapshot_interval = 5000
 
 
     exp_name = "mnist_%s" % timestamp
@@ -81,6 +82,7 @@ if __name__ == "__main__":
         checkpoint_dir=checkpoint_dir,
         isrestore=isrestore,
         restore_checkpoint_file=restore_checkpoint_file,
+        snapshot_interval=snapshot_interval,
         max_epoch=max_epoch,
         updates_per_epoch=updates_per_epoch,
         info_reg_coeff=1.0,
