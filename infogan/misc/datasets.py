@@ -87,7 +87,9 @@ class CelebADataset():
 
             # Start next epoch
             start = np.random.randint(1,127)
-            self._index_in_epoch = batch_size
+            self._index_in_epoch = 0
+            self._index_in_epoch += batch_size
+            self._index_in_epoch += start
             assert batch_size <= self._num_examples
         end = self._index_in_epoch
         pstr('end ',end)
