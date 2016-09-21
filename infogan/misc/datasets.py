@@ -62,7 +62,7 @@ class CelebADataset():
         data_directory = "./celebA"
         self._data = glob(os.path.join(data_directory, "*.jpg"))
         self._num_examples = len(self._data)
-        self._index_in_epoch = self._num_examples - 1000
+        self._index_in_epoch = self._num_examples - 300
         self._epochs_completed = -1
 
         self.image_dim = 128 * 128
@@ -83,6 +83,7 @@ class CelebADataset():
             # Shuffle the data
             #perm = np.arange(self._num_examples)
             #np.random.shuffle(perm)
+
             #self._data = self._data[perm]
 
             # Start next epoch
@@ -92,7 +93,7 @@ class CelebADataset():
             self._index_in_epoch += start
             assert batch_size <= self._num_examples
         end = self._index_in_epoch
-        pstr('end ',end)
+        #pstr('end ',end)
 
         batch_files = self._data[start:end]
         batch = [get_image(batch_file, self.image_shape[0], is_crop=True, resize_w=self.image_shape[0], is_grayscale = self.is_grayscale) for batch_file in batch_files]
