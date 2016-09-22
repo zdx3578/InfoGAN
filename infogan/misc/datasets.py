@@ -82,13 +82,7 @@ class CelebADataset():
         if self._index_in_epoch > self._num_examples:
             # Finished epoch
             self._epochs_completed += 1
-            # Shuffle the data
-            #perm = np.arange(self._num_examples)
-            #np.random.shuffle(perm)
 
-            #self._data = self._data[perm]
-
-            # Start next epoch
             start = np.random.randint(1,127)
             self._index_in_epoch = 0
             self._index_in_epoch += batch_size
