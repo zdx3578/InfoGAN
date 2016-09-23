@@ -29,7 +29,7 @@ if __name__ == "__main__":
     max_epoch = 201
     #snapshot_interval = 5000
     snapshot_interval = 5000
-    ganlp=7
+    ganlp=3
     #ganlp=4
 
 
