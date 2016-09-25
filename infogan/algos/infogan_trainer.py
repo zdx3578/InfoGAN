@@ -160,7 +160,7 @@ class InfoGANTrainer(object):
 
             pstr('1.1 g_vars',g_vars)
 
-            exit()
+            #exit()
 
             self.log_vars.append(("max_real_d", tf.reduce_max(real_d)))
             self.log_vars.append(("min_real_d", tf.reduce_min(real_d)))
