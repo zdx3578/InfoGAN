@@ -23,8 +23,8 @@ if __name__ == "__main__":
     #!!!!!
     #batch_size = 128
     batch_size = 108
-    updates_per_epoch = 50
-    #updates_per_epoch = 100
+    #updates_per_epoch = 50
+    updates_per_epoch = 3
     #max_epoch = 122
     max_epoch = 201
     #snapshot_interval = 5000
@@ -46,19 +46,19 @@ if __name__ == "__main__":
     dataset = CelebADataset()
 
     latent_spec = [
-        (Uniform(62), False),
-        (Categorical(10), True),
-        (Uniform(1, fix_std=True), True),
-        (Uniform(1, fix_std=True), True),
-        (Uniform(1, fix_std=True), True),
-        (Uniform(1, fix_std=True), True),
-        (Uniform(1, fix_std=True), True),        
-        (Uniform(1, fix_std=True), True),
-        (Uniform(1, fix_std=True), True),
-        (Uniform(1, fix_std=True), True),
-#        (Uniform(1, fix_std=True), True),
-#        (Uniform(1, fix_std=True), True),
-#        (Uniform(1, fix_std=True), True),
+        (Uniform(107), False),
+        #(Categorical(10), True),
+        (Uniform(11, fix_std=True), True),
+        (Uniform(11, fix_std=True), True),
+        (Uniform(11, fix_std=True), True),
+        (Uniform(11, fix_std=True), True),
+        (Uniform(11, fix_std=True), True),        
+        (Uniform(11, fix_std=True), True),
+        (Uniform(11, fix_std=True), True),
+        (Uniform(11, fix_std=True), True),
+        (Uniform(11, fix_std=True), True),
+        (Uniform(11, fix_std=True), True),
+        (Uniform(11, fix_std=True), True),
 #        (Uniform(1, fix_std=True), True),
 #        (Uniform(1, fix_std=True), True),
 #        (Uniform(1, fix_std=True), True),

@@ -76,8 +76,15 @@ class InfoGANTrainer(object):
             #print("1 %d | " % z_var )
             fake_x, _ = self.model.generate(z_var)
             pstr('1.1 fake_x',fake_x)
+            pstr('1.1 self.images',self.images)
+
             real_d, _, _, _ = self.model.discriminate(self.images)
-            fake_d, _, fake_reg_z_dist_info, _ = self.model.discriminate(fake_x)
+            fake_d, sample, fake_reg_z_dist_info, reg_dist_flat = self.model.discriminate(fake_x)
+            
+            pstr('1.1.2 sample',sample)
+            pstr('1.1.2 fake_reg_z_dist_info',fake_reg_z_dist_info)
+            pstr('1.1.2 reg_dist_flat',reg_dist_flat)
+
 
             pstr('1.1 fake_d',fake_d)
             pstr('1.5 fake_reg_z_dist_info',fake_reg_z_dist_info)
@@ -93,6 +100,8 @@ class InfoGANTrainer(object):
 
             mi_est = tf.constant(0.)
             cross_ent = tf.constant(0.)
+
+
 
             # compute for discrete and continuous codes separately
             # discrete:
@@ -150,6 +159,8 @@ class InfoGANTrainer(object):
             g_vars = [var for var in all_vars if var.name.startswith('g_')]
 
             pstr('1.1 g_vars',g_vars)
+
+            exit()
 
             self.log_vars.append(("max_real_d", tf.reduce_max(real_d)))
             self.log_vars.append(("min_real_d", tf.reduce_min(real_d)))

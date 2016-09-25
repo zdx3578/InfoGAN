@@ -4,6 +4,9 @@ import itertools
 import tensorflow as tf
 import numpy as np
 
+from infogan.misc.utilsdcgan import *
+
+
 TINY = 1e-8
 
 floatX = np.float32
@@ -390,6 +393,7 @@ class Product(Distribution):
         out = []
         for slice_from, slice_to, dist in zip([0] + cum_dims, cum_dims, self.dists):
             sliced = x[:, slice_from:slice_to]
+            pstr('dist---sliced',sliced)
             out.append(sliced)
         return out
 
@@ -440,6 +444,8 @@ class Product(Distribution):
         ret = []
         for dist_i in self.dists:
             ret.append(tf.cast(dist_i.sample_prior(batch_size), tf.float32))
+            pstr('dist----dist_i',dist_i)
+            pstr('dist----dist_i.sample_prior(batch_size)',dist_i.sample_prior(batch_size))
         return tf.concat(1, ret)
 
     def logli(self, x_var, dist_info):

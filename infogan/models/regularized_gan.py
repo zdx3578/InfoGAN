@@ -17,14 +17,26 @@ class RegularizedGAN(object):
         :type network_type: string
         """
         self.output_dist = output_dist
+        pstr('output_dist',self.output_dist)
         self.latent_spec = latent_spec
         self.latent_dist = Product([x for x, _ in latent_spec])
+        pstr('latent_dist',self.latent_dist)
+        pstr('x in latent_spec',[x for x, _ in self.latent_spec])
+        pstr('xreg in latent_spec',[xreg for _, xreg in self.latent_spec])
+        #for x in enumerate(self.latent_spec):
+         #   print '------------------------'
+         #   for y in enumerate(x):
+          #      pstrall('x----reg',y)
+
         self.reg_latent_dist = Product([x for x, reg in latent_spec if reg])
         self.nonreg_latent_dist = Product([x for x, reg in latent_spec if not reg])
         self.batch_size = batch_size
         self.network_type = network_type
         self.image_shape = image_shape
         assert all(isinstance(x, (Gaussian, Categorical, Bernoulli)) for x in self.reg_latent_dist.dists)
+        for x in self.reg_latent_dist.dists:
+            pstr('x in reg_latent_dist.dists',x)
+
 
         self.reg_cont_latent_dist = Product([x for x in self.reg_latent_dist.dists if isinstance(x, Gaussian)])
         self.reg_disc_latent_dist = Product([x for x in self.reg_latent_dist.dists if isinstance(x, (Categorical, Bernoulli))])
@@ -170,6 +182,7 @@ class RegularizedGAN(object):
     def reg_z(self, z_var):
         ret = []
         for (_, reg_i), z_i in zip(self.latent_spec, self.latent_dist.split_var(z_var)):
+            pstr('reg_z split_var  z_i',z_i)
             if reg_i:
                 ret.append(z_i)
         return self.reg_latent_dist.join_vars(ret)
