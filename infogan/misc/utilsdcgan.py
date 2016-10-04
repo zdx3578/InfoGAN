@@ -9,12 +9,17 @@ import pprint
 import scipy.misc
 import numpy as np
 from time import gmtime, strftime
+import datetime
+import dateutil
+import dateutil.tz
+from infogan.misc.utils import *
+
 
 pp = pprint.PrettyPrinter()
 
 get_stddev = lambda x, k_h, k_w: 1/math.sqrt(k_w*k_h*x.get_shape()[-1])
 
-
+mkdir_p("/tmp/celeba/")
 
 
 
@@ -50,18 +55,22 @@ def center_crop(x, crop_h, crop_w=None, resize_w=64):
     if crop_w is None:
         crop_w = crop_h
     h, w = x.shape[:2]
-    pstr("h",h)
-    pstr("h",h)
-    pall("x",x)
+    #pstr("h",h)
+    #pstr("w",w)
+    #pshape("x",x)
+    #pstr("crop_h",crop_h)
+    #pstr("resize_w",resize_w)
 
     j = int(round((h - crop_h)/2.))
     i = int(round((w - crop_w)/2.))
     newresize = scipy.misc.imresize(x[j:j+crop_h, i:i+crop_w],
                                [resize_w, resize_w])
 
-    now = datetime.datetime.now(dateutil.tz.tzlocal())
-    timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
-    scipy.misc.imsave("/tmp/celeba/%s" % timestamp, newresize)
+    #now = datetime.datetime.now(dateutil.tz.tzlocal())
+    #timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
+    #log_dir="/tmp/celeba/%s" % timestamp
+    #mkdir_p(log_dir)
+    #scipy.misc.imsave(log_dir, newresize)
     return newresize
 
 def transform(image, npx=148, is_crop=True, resize_w=64):
@@ -70,7 +79,15 @@ def transform(image, npx=148, is_crop=True, resize_w=64):
         cropped_image = center_crop(image, npx, resize_w=resize_w)
     else:
         cropped_image = image
-    return np.array(cropped_image)/127.5 - 1.
+    newresize = np.array(cropped_image)/127.5 - 1.
+
+    #now = datetime.datetime.now(dateutil.tz.tzlocal())
+    #timestamp = now.strftime('%Y_%m_%d_%H_%M_%S.%f')
+    #log_dir="/tmp/celeba/%s" % timestamp + '.jpg'
+    #scipy.misc.imsave(log_dir, newresize)
+    #print 'save!!'
+
+    return newresize
 
 def inverse_transform(images):
     return (images+1.)/2.
