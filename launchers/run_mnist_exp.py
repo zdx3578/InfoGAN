@@ -22,14 +22,14 @@ if __name__ == "__main__":
     
     #!!!!!
     #batch_size = 128
-    batch_size = 168
+    batch_size = 200
     #updates_per_epoch = 50
     updates_per_epoch = 100
     max_epoch = 301
     #max_epoch = 201
     #snapshot_interval = 5000
     snapshot_interval = 10000
-    ganlp=1
+    ganlp=3
     #ganlp=4
 
 
@@ -90,7 +90,7 @@ if __name__ == "__main__":
         max_epoch=max_epoch,
         updates_per_epoch=updates_per_epoch,
         info_reg_coeff=1.0,
-        generator_learning_rate=1e-3,
+        generator_learning_rate=3e-4,
         discriminator_learning_rate=2e-4,
     )
 
