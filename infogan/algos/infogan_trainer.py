@@ -330,6 +330,6 @@ class InfoGANTrainer(object):
                 log_line = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals))
                 print("Epoch %d | " % (epoch) + log_line)
                 sys.stdout.flush()
-                pstr('avg_log_vals',avg_log_vals)
+                #pstr('avg_log_vals',avg_log_vals)
                 if np.any(np.isnan(avg_log_vals)):
                     raise ValueError("NaN detected!")
