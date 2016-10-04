@@ -310,6 +310,8 @@ class InfoGANTrainer(object):
                     for j in range(self.ganlp):
                         #gencount += 1
                         #print gencount
+                        batch_images  = self.dataset.next_batch(self.batch_size)
+                        feed_dict={ self.images: batch_images}
                         sess.run(self.generator_trainer, feed_dict)
                     all_log_vals.append(log_vals)
                     counter += 1
