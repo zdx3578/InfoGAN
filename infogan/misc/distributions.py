@@ -5,6 +5,7 @@ import tensorflow as tf
 import numpy as np
 
 from infogan.misc.utilsdcgan import *
+from infogan.misc.utils import *
 
 
 TINY = 1e-8
@@ -110,6 +111,7 @@ class Distribution(object):
 class Categorical(Distribution):
     def __init__(self, dim):
         self._dim = dim
+        pstr('9.29...self._dim',self._dim)
 
     @property
     def dim(self):

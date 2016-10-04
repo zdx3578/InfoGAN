@@ -197,6 +197,8 @@ class InfoGANTrainer(object):
                 ),
                 self.model.reg_latent_dist.sample_prior(self.batch_size - 100).eval(),
             ], axis=0)
+            pshape('fixed_cat',fixed_cat)
+            pshape('fixed_noncat',fixed_noncat)
 
         offset = 0
         for dist_idx, dist in enumerate(self.model.reg_latent_dist.dists):
@@ -205,19 +207,28 @@ class InfoGANTrainer(object):
                 c_vals = []
                 for idx in xrange(10):
                     c_vals.extend([-1.0 + idx * 2.0 / 9] * 10)
+                pshape('c_vals',c_vals)
                 c_vals.extend([0.] * (self.batch_size - 100))
+                pshape('c_vals',c_vals)
                 vary_cat = np.asarray(c_vals, dtype=np.float32).reshape((-1, 1))
+                pshape('vary_cat',vary_cat)
                 cur_cat = np.copy(fixed_cat)
                 cur_cat[:, offset:offset+1] = vary_cat
+                pshape('cur_cat  Gaussian',cur_cat)
                 offset += 1
             elif isinstance(dist, Categorical):
                 lookup = np.eye(dist.dim, dtype=np.float32)
                 cat_ids = []
                 for idx in xrange(10):
                     cat_ids.extend([idx] * 10)
+
+                pshape('cat_ids',cat_ids)
+
                 cat_ids.extend([0] * (self.batch_size - 100))
+                pshape('cat_ids',cat_ids)
                 cur_cat = np.copy(fixed_cat)
                 cur_cat[:, offset:offset+dist.dim] = lookup[cat_ids]
+                pshape('cur_cat  Categorical',cur_cat)
                 offset += dist.dim
             elif isinstance(dist, Bernoulli):
                 assert dist.dim == 1, "Only dim=1 is currently supported"

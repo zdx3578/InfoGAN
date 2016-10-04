@@ -15,15 +15,7 @@ pp = pprint.PrettyPrinter()
 get_stddev = lambda x, k_h, k_w: 1/math.sqrt(k_w*k_h*x.get_shape()[-1])
 
 
-def pshape(string,x):
-  print ("Shape: of '%s' is %s " % (string,x.shape,))
-  
-def pstr(string,x):
-  print ("STR: '%s' is %s " % (string,x,))
 
-def pall(string,x):
-  pstr(string,x)
-  pshape(string,x)
 
 
 def get_image(image_path, image_size, is_crop=True, resize_w=64, is_grayscale = False):
@@ -58,10 +50,19 @@ def center_crop(x, crop_h, crop_w=None, resize_w=64):
     if crop_w is None:
         crop_w = crop_h
     h, w = x.shape[:2]
+    pstr("h",h)
+    pstr("h",h)
+    pall("x",x)
+
     j = int(round((h - crop_h)/2.))
     i = int(round((w - crop_w)/2.))
-    return scipy.misc.imresize(x[j:j+crop_h, i:i+crop_w],
+    newresize = scipy.misc.imresize(x[j:j+crop_h, i:i+crop_w],
                                [resize_w, resize_w])
+
+    now = datetime.datetime.now(dateutil.tz.tzlocal())
+    timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
+    scipy.misc.imsave("/tmp/celeba/%s" % timestamp, newresize)
+    return newresize
 
 def transform(image, npx=148, is_crop=True, resize_w=64):
     # npx : # of pixels width/height of image

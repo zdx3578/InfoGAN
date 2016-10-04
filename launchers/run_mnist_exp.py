@@ -46,27 +46,27 @@ if __name__ == "__main__":
     dataset = CelebADataset()
 
     latent_spec = [
-        (Uniform(107), False),
-        #(Categorical(10), True),
-        (Uniform(11, fix_std=True), True),
-        (Uniform(11, fix_std=True), True),
-        (Uniform(11, fix_std=True), True),
-        (Uniform(11, fix_std=True), True),
-        (Uniform(11, fix_std=True), True),        
-        (Uniform(11, fix_std=True), True),
-        (Uniform(11, fix_std=True), True),
-        (Uniform(11, fix_std=True), True),
-        (Uniform(11, fix_std=True), True),
-        (Uniform(11, fix_std=True), True),
-        (Uniform(11, fix_std=True), True),
-#        (Uniform(1, fix_std=True), True),
-#        (Uniform(1, fix_std=True), True),
-#        (Uniform(1, fix_std=True), True),
-#        (Uniform(1, fix_std=True), True),
-#        (Uniform(1, fix_std=True), True),
-#        (Uniform(1, fix_std=True), True),
-#        (Uniform(1, fix_std=True), True),
+        (Uniform(128), False),
+        (Categorical(10), True),
+        (Categorical(10), True),
+        (Categorical(10), True),
+        (Categorical(10), True),
+        (Categorical(10), True),
+        (Categorical(10), True),
+        (Categorical(10), True),
+        (Categorical(10), True),
+        (Categorical(10), True),
+        (Categorical(10), True),
     ]
+
+#        (Uniform(11, fix_std=True), True),
+#        (Uniform(11, fix_std=True), True),
+#        (Uniform(1, fix_std=True), True),
+#        (Uniform(1, fix_std=True), True),
+#        (Uniform(1, fix_std=True), True),
+#        (Uniform(1, fix_std=True), True),
+#        (Uniform(1, fix_std=True), True),
+#   ]
 
     model = RegularizedGAN(
         output_dist=MeanBernoulli(dataset.image_dim),

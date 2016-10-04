@@ -14,7 +14,10 @@ def mkdir_p(path):
             raise
 
 def pshape(string,x):
-	print ("Shape: of '%s' is %s " % (string,x.shape,))
+    if isinstance(x,list):
+        print ("Shape: of '%s' is-len  %s " % (string,len(x)))
+    else:
+        print ("Shape: of '%s' is %s " % (string,x.shape,))
 	
 
 def pstr(string,x):
