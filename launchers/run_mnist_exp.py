@@ -22,10 +22,10 @@ if __name__ == "__main__":
     
     #!!!!!
     #batch_size = 128
-    batch_size = 168
+    batch_size = 200
     #updates_per_epoch = 50
     updates_per_epoch = 100
-    max_epoch = 300
+    max_epoch = 301
     #max_epoch = 201
     #snapshot_interval = 5000
     snapshot_interval = 10000
