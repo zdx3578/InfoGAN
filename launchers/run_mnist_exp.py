@@ -29,7 +29,7 @@ if __name__ == "__main__":
     #max_epoch = 201
     #snapshot_interval = 5000
     snapshot_interval = 10000
-    ganlp=30
+    ganlp=1
     #ganlp=4
 
 
@@ -46,18 +46,24 @@ if __name__ == "__main__":
     dataset = CelebADataset()
 
     latent_spec = [
-        (Uniform(128), False),
+        (Uniform(200), False),
         (Categorical(10), True),
         (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
+        (Uniform(1, fix_std=True), True),
+        (Uniform(1, fix_std=True), True),
+        (Uniform(1, fix_std=True), True),
+        (Uniform(1, fix_std=True), True),
+        (Uniform(1, fix_std=True), True),
+        (Uniform(1, fix_std=True), True),
+        (Uniform(1, fix_std=True), True),
+        (Uniform(1, fix_std=True), True),
     ]
+        #(Categorical(10), True),
+        #(Categorical(10), True),
+        #(Categorical(10), True),
+        #(Categorical(10), True),
+        #(Categorical(10), True),
+    #]
 
 #        (Uniform(11, fix_std=True), True),
 #        (Uniform(11, fix_std=True), True),
