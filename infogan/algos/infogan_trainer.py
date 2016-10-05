@@ -207,14 +207,14 @@ class InfoGANTrainer(object):
                 c_vals = []
                 for idx in xrange(10):
                     c_vals.extend([-1.0 + idx * 2.0 / 9] * 10)
-                pshape('c_vals',c_vals)
+                #pshape('c_vals',c_vals)
                 c_vals.extend([0.] * (self.batch_size - 100))
-                pshape('c_vals',c_vals)
+                #pshape('c_vals',c_vals)
                 vary_cat = np.asarray(c_vals, dtype=np.float32).reshape((-1, 1))
-                pshape('vary_cat',vary_cat)
+                #pshape('vary_cat',vary_cat)
                 cur_cat = np.copy(fixed_cat)
                 cur_cat[:, offset:offset+1] = vary_cat
-                pshape('cur_cat  Gaussian',cur_cat)
+                #pshape('cur_cat  Gaussian',cur_cat)
                 offset += 1
             elif isinstance(dist, Categorical):
                 lookup = np.eye(dist.dim, dtype=np.float32)
@@ -222,13 +222,13 @@ class InfoGANTrainer(object):
                 for idx in xrange(10):
                     cat_ids.extend([idx] * 10)
 
-                pshape('cat_ids',cat_ids)
+#                pshape('cat_ids',cat_ids)
 
                 cat_ids.extend([0] * (self.batch_size - 100))
-                pshape('cat_ids',cat_ids)
+                #pshape('cat_ids',cat_ids)
                 cur_cat = np.copy(fixed_cat)
                 cur_cat[:, offset:offset+dist.dim] = lookup[cat_ids]
-                pshape('cur_cat  Categorical',cur_cat)
+                #pshape('cur_cat  Categorical',cur_cat)
                 offset += dist.dim
             elif isinstance(dist, Bernoulli):
                 assert dist.dim == 1, "Only dim=1 is currently supported"
@@ -310,6 +310,7 @@ class InfoGANTrainer(object):
                     for j in range(self.ganlp):
                         #gencount += 1
                         #print gencount
+                        sess.run(self.generator_trainer, feed_dict)
                         batch_images  = self.dataset.next_batch(self.batch_size)
                         feed_dict={ self.images: batch_images}
                         sess.run(self.generator_trainer, feed_dict)

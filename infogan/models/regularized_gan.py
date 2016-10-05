@@ -34,8 +34,8 @@ class RegularizedGAN(object):
         self.network_type = network_type
         self.image_shape = image_shape
         assert all(isinstance(x, (Gaussian, Categorical, Bernoulli)) for x in self.reg_latent_dist.dists)
-        for x in self.reg_latent_dist.dists:
-            pstr('x in reg_latent_dist.dists',x)
+        #for x in self.reg_latent_dist.dists:
+         #   pstr('x in reg_latent_dist.dists',x)
 
 
         self.reg_cont_latent_dist = Product([x for x in self.reg_latent_dist.dists if isinstance(x, Gaussian)])
@@ -60,21 +60,11 @@ class RegularizedGAN(object):
 
                      custom_conv2d(256, k_h=4, k_w=4).
                      conv_batch_norm().
-                     apply(leaky_rectify).
-
-                     #custom_conv2d(512, k_h=4, k_w=4).
-                     #conv_batch_norm().
-                     #apply(leaky_rectify).
-                     #custom_conv2d(512, k_h=4, k_w=4).
-                     #conv_batch_norm().
-                     #apply(leaky_rectify).
-                     #custom_conv2d(512, k_h=4, k_w=4).
-                     #conv_batch_norm().
-                     #apply(leaky_rectify).
-
-                     custom_fully_connected(1024).
-                     fc_batch_norm().
                      apply(leaky_rectify))
+
+                     #custom_fully_connected(1024).
+                     #fc_batch_norm().
+                     #apply(leaky_rectify))
                 self.discriminator_template = shared_template.custom_fully_connected(1)
                 self.encoder_template = \
                     (shared_template.
@@ -83,33 +73,20 @@ class RegularizedGAN(object):
                      apply(leaky_rectify).
                      custom_fully_connected(self.reg_latent_dist.dist_flat_dim))
 
-# 128/2/2/2/2/2  so layers;
 
             with tf.variable_scope("g_net"):
                 s = self.image_shape[0]
                 s2, s4, s8, s16 = int(s / 2), int(s / 4), int(s / 8), int(s / 16)
                 self.generator_template = \
                     (pt.template("input").
-                     custom_fully_connected(1024).
-                     fc_batch_norm().
-                     apply(tf.nn.relu).
-
-                     #custom_fully_connected(image_size / 4 * image_size / 4 * 128).
+                     #custom_fully_connected(1024).
                      #fc_batch_norm().
                      #apply(tf.nn.relu).
-                     #reshape([-1, image_size / 4, image_size / 4, 128]).
 
                      custom_fully_connected(s16 * s16 * 512).
                      fc_batch_norm().
                      apply(tf.nn.relu).
                      reshape([-1, s16, s16,  512]).
-
-                     #custom_deconv2d([0, image_size / 32, image_size / 32, 1024], k_h=4, k_w=4).
-                     #conv_batch_norm().
-                     #apply(tf.nn.relu).
-                     #custom_deconv2d([0, image_size / 16, image_size / 16, 512], k_h=4, k_w=4).
-                     #conv_batch_norm().
-                     #apply(tf.nn.relu).
 
                      custom_deconv2d([0, s8, s8,  256], k_h=4, k_w=4).
                      conv_batch_norm().
@@ -119,7 +96,6 @@ class RegularizedGAN(object):
                      conv_batch_norm().
                      apply(tf.nn.relu).
 
-                     
                      custom_deconv2d([0, s2, s2, 64], k_h=4, k_w=4).
                      conv_batch_norm().
                      apply(tf.nn.relu).
