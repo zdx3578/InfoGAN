@@ -311,9 +311,9 @@ class InfoGANTrainer(object):
                         #gencount += 1
                         #print gencount
                         sess.run(self.generator_trainer, feed_dict)
-                        batch_images  = self.dataset.next_batch(self.batch_size)
-                        feed_dict={ self.images: batch_images}
-                        sess.run(self.generator_trainer, feed_dict)
+                        #batch_images  = self.dataset.next_batch(self.batch_size)
+                        #feed_dict={ self.images: batch_images}
+                        #sess.run(self.generator_trainer, feed_dict)
                     all_log_vals.append(log_vals)
                     counter += 1
                     if counter % self.snapshot_interval == 0:
