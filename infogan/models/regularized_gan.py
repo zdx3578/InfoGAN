@@ -93,11 +93,11 @@ class RegularizedGAN(object):
                      apply(tf.nn.relu).
 
                      custom_deconv2d([0, s4, s4, 128], k_h=4, k_w=4).
-                     conv_batch_norm().
+                     #conv_batch_norm().
                      apply(tf.nn.relu).
 
                      custom_deconv2d([0, s2, s2, 64], k_h=4, k_w=4).
-                     conv_batch_norm().
+                     #conv_batch_norm().
                      apply(tf.nn.relu).
                      custom_deconv2d([0] + list(image_shape), k_h=4, k_w=4).
                      apply(tf.nn.tanh))
