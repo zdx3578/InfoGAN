@@ -60,10 +60,10 @@ class RegularizedGAN(object):
 
                      custom_conv2d(256, k_h=4, k_w=4).
                      conv_batch_norm().
-                     apply(leaky_rectify).
+                     #apply(leaky_rectify).
 
-                     custom_fully_connected(1024).
-                     fc_batch_norm().
+                     #custom_fully_connected(1024).
+                     #fc_batch_norm().
                      apply(leaky_rectify))
                 self.discriminator_template = shared_template.custom_fully_connected(1)
                 self.encoder_template = \
@@ -79,9 +79,9 @@ class RegularizedGAN(object):
                 s2, s4, s8, s16 = int(s / 2), int(s / 4), int(s / 8), int(s / 16)
                 self.generator_template = \
                     (pt.template("input").
-                     custom_fully_connected(1024).
-                     fc_batch_norm().
-                     apply(tf.nn.relu).
+                     #custom_fully_connected(1024).
+                     #fc_batch_norm().
+                     #apply(tf.nn.relu).
 
                      custom_fully_connected(s16 * s16 * 512).
                      fc_batch_norm().
@@ -93,11 +93,11 @@ class RegularizedGAN(object):
                      apply(tf.nn.relu).
 
                      custom_deconv2d([0, s4, s4, 128], k_h=4, k_w=4).
-                     conv_batch_norm().
+                     #conv_batch_norm().
                      apply(tf.nn.relu).
 
                      custom_deconv2d([0, s2, s2, 64], k_h=4, k_w=4).
-                     conv_batch_norm().
+                     #conv_batch_norm().
                      apply(tf.nn.relu).
                      custom_deconv2d([0] + list(image_shape), k_h=4, k_w=4).
                      flatten())
