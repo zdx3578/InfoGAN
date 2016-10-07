@@ -29,7 +29,7 @@ if __name__ == "__main__":
     #max_epoch = 201
     #snapshot_interval = 5000
     snapshot_interval = 10000
-    ganlp=5
+    ganlp=1
     #ganlp=4
 
 
@@ -89,8 +89,8 @@ if __name__ == "__main__":
         ganlp=ganlp,
         max_epoch=max_epoch,
         updates_per_epoch=updates_per_epoch,
-        info_reg_coeff=1.0,
-        generator_learning_rate=2e-4,
+        info_reg_coeff=0.1,
+        generator_learning_rate=1e-3,
         discriminator_learning_rate=2e-4,
     )
 
