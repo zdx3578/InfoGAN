@@ -78,9 +78,15 @@ class InfoGANTrainer(object):
             pstr('1.1 fake_x',fake_x)
             pstr('1.1 self.images',self.images)
 
-            real_d, _, _, _ = self.model.discriminate(self.images)
-            fake_d, sample, fake_reg_z_dist_info, reg_dist_flat = self.model.discriminate(fake_x)
+            real_d, _, _, _ ,real_d_log= self.model.discriminate(self.images)
+            fake_d, sample, fake_reg_z_dist_info, reg_dist_flat , fake_d_log = self.model.discriminate(fake_x)
             
+            d_loss_real = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(real_d_log, tf.ones_like(real_d)))
+            d_loss_fake = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(fake_d_log, tf.zeros_like(fake_d)))
+            discriminator_loss = d_loss_real + d_loss_fake
+            generator_loss = tf.reduce_mean(tf.nn.sigmoid_cross_entropy_with_logits(fake_d_log, tf.ones_like(fake_d)))
+
+
             pstr('1.1.2 sample',sample)
             pstr('1.1.2 fake_reg_z_dist_info',fake_reg_z_dist_info)
             pstr('1.1.2 reg_dist_flat',reg_dist_flat)
@@ -92,8 +98,8 @@ class InfoGANTrainer(object):
             reg_z = self.model.reg_z(z_var)
             pstr('2 reg_z',reg_z)
 
-            discriminator_loss = - tf.reduce_mean(tf.log(real_d + TINY) + tf.log(1. - fake_d + TINY))
-            generator_loss = - tf.reduce_mean(tf.log(fake_d + TINY))
+            #discriminator_loss = - tf.reduce_mean(tf.log(real_d + TINY) + tf.log(1. - fake_d + TINY))
+            #generator_loss = - tf.reduce_mean(tf.log(fake_d + TINY))
 
             self.log_vars.append(("discriminator_loss", discriminator_loss))
             self.log_vars.append(("generator_loss", generator_loss))

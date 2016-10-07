@@ -56,11 +56,11 @@ class RegularizedGAN(object):
                      conv_batch_norm().
                      apply(leaky_rectify).
 
-                     custom_conv2d(128, k_h=4, k_w=4))
-                     #conv_batch_norm().
-                     #apply(leaky_rectify))
+                     custom_conv2d(128, k_h=4, k_w=4).
+                     conv_batch_norm().
+                     apply(leaky_rectify).
 
-                     #custom_conv2d(256, k_h=4, k_w=4).
+                     custom_conv2d(256, k_h=4, k_w=4))
                      #conv_batch_norm().
                      #apply(leaky_rectify).
                      #custom_fully_connected(1024).
@@ -109,10 +109,11 @@ class RegularizedGAN(object):
 
     def discriminate(self, x_var):
         d_out = self.discriminator_template.construct(input=x_var)
-        d = tf.nn.sigmoid(d_out[:, 0])
+        #d = tf.nn.sigmoid(d_out[:, 0])
+        d = tf.nn.sigmoid(d_out)
         reg_dist_flat = self.encoder_template.construct(input=x_var)
         reg_dist_info = self.reg_latent_dist.activate_dist(reg_dist_flat)
-        return d, self.reg_latent_dist.sample(reg_dist_info), reg_dist_info, reg_dist_flat
+        return d, self.reg_latent_dist.sample(reg_dist_info), reg_dist_info, reg_dist_flat ,d_out
 
     def generate(self, z_var):
         x_dist_flat = self.generator_template.construct(input=z_var)
