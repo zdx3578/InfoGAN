@@ -58,7 +58,7 @@ class RegularizedGAN(object):
 
                      custom_conv2d(128, k_h=4, k_w=4).
                      conv_batch_norm().
-                     apply(leaky_rectify).
+                     apply(leaky_rectify))
 
                      #custom_conv2d(256, k_h=4, k_w=4).
                      #conv_batch_norm().
