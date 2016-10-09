@@ -89,7 +89,7 @@ if __name__ == "__main__":
         ganlp=ganlp,
         max_epoch=max_epoch,
         updates_per_epoch=updates_per_epoch,
-        info_reg_coeff=0.1,
+        info_reg_coeff=1,
         generator_learning_rate=5e-4,
         discriminator_learning_rate=4e-5,
     )
