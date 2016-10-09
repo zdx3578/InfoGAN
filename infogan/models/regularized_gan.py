@@ -78,17 +78,23 @@ class RegularizedGAN(object):
 
             with tf.variable_scope("g_net"):
                 s = self.image_shape[0]
-                s2, s4, s8, s16 = int(s / 2), int(s / 4), int(s / 8), int(s / 16)
+                s2, s4, s8, s16, s32 = int(s / 2), int(s / 4), int(s / 8), int(s / 16), int(s / 32)
                 self.generator_template = \
                     (pt.template("input").
-                     #custom_fully_connected(1024).
-                     #fc_batch_norm().
-                     #apply(tf.nn.relu).
-
+                     
                      custom_fully_connected(s16 * s16 * 512).
                      fc_batch_norm().
                      apply(tf.nn.relu).
                      reshape([-1, s16, s16,  512]).
+
+                     #custom_fully_connected(s32 * s32 * 1024).
+                     #fc_batch_norm().
+                     #apply(tf.nn.relu).
+                     #reshape([-1, s32, s32,  1024]).
+
+                     #custom_deconv2d([0, s16, s16,  512], k_h=4, k_w=4).
+                     #conv_batch_norm().
+                     #apply(tf.nn.relu).
 
                      custom_deconv2d([0, s8, s8,  256], k_h=4, k_w=4).
                      conv_batch_norm().
