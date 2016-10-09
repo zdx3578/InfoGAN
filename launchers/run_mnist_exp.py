@@ -24,12 +24,12 @@ if __name__ == "__main__":
     #batch_size = 128
     batch_size = 128
     #updates_per_epoch = 50
-    updates_per_epoch = 64
+    updates_per_epoch = 25
     max_epoch = 701
     #max_epoch = 201
     #snapshot_interval = 5000
     snapshot_interval = 10000
-    ganlp=1
+    ganlp=2
     #ganlp=4
 
 
@@ -90,8 +90,8 @@ if __name__ == "__main__":
         max_epoch=max_epoch,
         updates_per_epoch=updates_per_epoch,
         info_reg_coeff=0.1,
-        generator_learning_rate=1e-3,
-        discriminator_learning_rate=2e-4,
+        generator_learning_rate=5e-4,
+        discriminator_learning_rate=4e-5,
     )
 
     algo.train()

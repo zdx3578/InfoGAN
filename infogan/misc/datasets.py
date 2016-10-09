@@ -95,7 +95,7 @@ class CelebADataset():
         #pstr('end ',end)
 
         batch_files = self._data[start:end]
-        batch = [get_image(batch_file, 108, is_crop=True, resize_w=self.image_shape[0], is_grayscale = self.is_grayscale) for batch_file in batch_files]
+        batch = [get_image(batch_file, 128, is_crop=True, resize_w=self.image_shape[0], is_grayscale = self.is_grayscale) for batch_file in batch_files]
         if (self.is_grayscale):
             batch_images = np.array(batch).astype(np.float32)[:, :, :, None]
         else:
