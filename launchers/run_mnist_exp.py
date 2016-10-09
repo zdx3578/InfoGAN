@@ -29,7 +29,7 @@ if __name__ == "__main__":
     #max_epoch = 201
     #snapshot_interval = 5000
     snapshot_interval = 10000
-    ganlp=2
+    ganlp=3
     #ganlp=4
 
 
@@ -91,7 +91,7 @@ if __name__ == "__main__":
         updates_per_epoch=updates_per_epoch,
         info_reg_coeff=1,
         generator_learning_rate=8e-4,
-        discriminator_learning_rate=3e-5,
+        discriminator_learning_rate=1e-5,
     )
 
     algo.train()
