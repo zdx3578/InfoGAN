@@ -10,6 +10,9 @@ from infogan.misc.utilsdcgan import *
 
 from glob import glob
 #import MA
+import dateutil
+import dateutil.tz
+import datetime
 
 
 
@@ -324,7 +327,7 @@ class InfoGANTrainer(object):
                         #pstr("all_log_vals_G",all_log_vals_G)
                         avg_log_vals_G = np.mean(np.array(all_log_vals_G), axis=0)
                         log_dict_G = dict(zip(log_keys, avg_log_vals_G))
-                        if not ganlpw%1500 :
+                        if not ganlpw%10000 :
                             print '-------------------------------------------------'
                             pstr('max_fake_d',log_dict_G['max_fake_d'])
                             #pstr('logdict',log_dict_G)
@@ -334,6 +337,9 @@ class InfoGANTrainer(object):
                         ganlpw2 = ganlpw
                         if log_dict_G['max_fake_d'] > 0.5 :
                             ganlpw = 0
+                    now = datetime.datetime.now(dateutil.tz.tzlocal())
+                    timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
+                    print timestamp
                     pstr("ganlpw",ganlpw2)
 
                     all_log_vals.append(log_vals)
