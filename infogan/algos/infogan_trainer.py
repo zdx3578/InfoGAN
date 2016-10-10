@@ -330,17 +330,27 @@ class InfoGANTrainer(object):
                         if not ganlpw%10000 :
                             print '-------------------------------------------------'
                             pstr('max_fake_d',log_dict_G['max_fake_d'])
-                            #pstr('logdict',log_dict_G)
                             log_line2 = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals_G))
                             print("While_G %d | " % (ganlpw) + log_line2)
+                            now = datetime.datetime.now(dateutil.tz.tzlocal())
+                            timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
+                            print timestamp
                         ganlpw += 1
                         ganlpw2 = ganlpw
                         if log_dict_G['max_fake_d'] > 0.5 :
                             ganlpw = 0
+
+
+                    print '-------------------------------------------------'
+                    pstr('max_fake_d',log_dict_G['max_fake_d'])
+                    log_line2 = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals_G))
+                    print("While_G %d | " % (ganlpw) + log_line2)
+
                     now = datetime.datetime.now(dateutil.tz.tzlocal())
                     timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
-                    print timestamp
                     pstr("ganlpw",ganlpw2)
+                    print timestamp
+
 
                     all_log_vals.append(log_vals)
                     counter += 1
