@@ -324,7 +324,7 @@ class InfoGANTrainer(object):
                         #pstr("all_log_vals_G",all_log_vals_G)
                         avg_log_vals_G = np.mean(np.array(all_log_vals_G), axis=0)
                         log_dict_G = dict(zip(log_keys, avg_log_vals_G))
-                        if not ganlpw%300 :
+                        if not ganlpw%1500 :
                             print '-------------------------------------------------'
                             pstr('max_fake_d',log_dict_G['max_fake_d'])
                             #pstr('logdict',log_dict_G)
@@ -332,7 +332,7 @@ class InfoGANTrainer(object):
                             print("While_G %d | " % (ganlpw) + log_line2)
                         ganlpw += 1
                         ganlpw2 = ganlpw
-                        if log_dict_G['max_fake_d'] > 0.7 :
+                        if log_dict_G['max_fake_d'] > 0.5 :
                             ganlpw = 0
                     pstr("ganlpw",ganlpw2)
 
