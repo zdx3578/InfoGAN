@@ -332,7 +332,7 @@ class InfoGANTrainer(object):
                             print("While_G %d | " % (ganlpw) + log_line2)
                         ganlpw += 1
                         ganlpw2 = ganlpw
-                        if log_dict_G['max_fake_d'] > 0.25 :
+                        if log_dict_G['max_fake_d'] > 0.7 :
                             ganlpw = 0
                     pstr("ganlpw",ganlpw2)
 
