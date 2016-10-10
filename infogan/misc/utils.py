@@ -23,6 +23,9 @@ def pshape(string,x):
 def pstr(string,x):
 	print ("STR: '%s' is %s " % (string,x,))
 
+def pstr2(x):
+    print ("STR: '%s' is %s " % (str(x),x,))
+
 def pstrall(string,x):
     for s in x:
         print ("STR: '%s' is %s " % (string,s,))

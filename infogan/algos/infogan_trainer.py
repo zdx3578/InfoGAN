@@ -9,6 +9,7 @@ from infogan.misc.utils import *
 from infogan.misc.utilsdcgan import *
 
 from glob import glob
+#import MA
 
 
 
@@ -166,7 +167,6 @@ class InfoGANTrainer(object):
 
             pstr('1.1 g_vars',g_vars)
 
-            #exit()
 
             self.log_vars.append(("max_real_d", tf.reduce_max(real_d)))
             self.log_vars.append(("min_real_d", tf.reduce_min(real_d)))
@@ -227,8 +227,6 @@ class InfoGANTrainer(object):
                 cat_ids = []
                 for idx in xrange(10):
                     cat_ids.extend([idx] * 10)
-
-#                pshape('cat_ids',cat_ids)
 
                 cat_ids.extend([0] * (self.batch_size - 100))
                 #pshape('cat_ids',cat_ids)
@@ -306,20 +304,36 @@ class InfoGANTrainer(object):
                 pbar.start()
                 all_log_vals = []
 
-                pstr('ganlp',self.ganlp)
+                #pstr('ganlp',self.ganlp)
                 for i in range(self.updates_per_epoch):
                     pbar.update(i)
                     batch_images  = self.dataset.next_batch(self.batch_size)
                     feed_dict={ self.images: batch_images}
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
+                    #pstr("log_vals",log_vals)
                     #gencount=0
-                    for j in range(self.ganlp):
-                        #gencount += 1
-                        #print gencount
-                        sess.run(self.generator_trainer, feed_dict)
-                        #batch_images  = self.dataset.next_batch(self.batch_size)
-                        #feed_dict={ self.images: batch_images}
-                        #sess.run(self.generator_trainer, feed_dict)
+                    #for j in range(self.ganlp):
+                    ganlpw=1
+                    all_log_vals_G = []
+                    while ganlpw :
+                        log_vals_G = sess.run([self.generator_trainer] + log_vars, feed_dict)
+                        #pstr("log_vals_G",log_vals_G)
+                        log_vals_G = log_vals_G[1:]
+                        #pstr("log_vals_G",log_vals_G)
+                        all_log_vals_G.append(log_vals_G)
+                        #pstr("all_log_vals_G",all_log_vals_G)
+                        avg_log_vals_G = np.mean(np.array(all_log_vals_G), axis=0)
+                        log_dict_G = dict(zip(log_keys, avg_log_vals_G))
+                        if not ganlpw%3 :
+                            print '-------------------------------------------------'
+                            pstr('max_fake_d',log_dict_G['max_fake_d'])
+                            #pstr('logdict',log_dict_G)
+                            log_line2 = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals_G))
+                            print("While_G %d | " % (ganlpw) + log_line2)
+                        ganlpw += 1
+                        if log_dict_G['max_fake_d'] > 0.9 :
+                            ganlpw = 0
+
                     all_log_vals.append(log_vals)
                     counter += 1
                     if counter % self.snapshot_interval == 0:
@@ -339,6 +353,7 @@ class InfoGANTrainer(object):
                 log_line = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals))
                 print("Epoch %d | " % (epoch) + log_line)
                 sys.stdout.flush()
-                #pstr('avg_log_vals',avg_log_vals)
+                #pstr2(log_dict)
+                #pstr2(log_dict['max_fake_d'])
                 if np.any(np.isnan(avg_log_vals)):
                     raise ValueError("NaN detected!")
