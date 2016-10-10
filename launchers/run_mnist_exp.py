@@ -90,8 +90,8 @@ if __name__ == "__main__":
         max_epoch=max_epoch,
         updates_per_epoch=updates_per_epoch,
         info_reg_coeff=1,
-        generator_learning_rate=7e-4,
-        discriminator_learning_rate=1e-4,
+        generator_learning_rate=1e-3,
+        discriminator_learning_rate=2e-4,
     )
 
     algo.train()

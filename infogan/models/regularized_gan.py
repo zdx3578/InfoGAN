@@ -53,8 +53,8 @@ class RegularizedGAN(object):
                     (pt.template("input").
                      reshape([-1] + list(image_shape)).
                      custom_conv2d(64, k_h=4, k_w=4).
-                     conv_batch_norm().
-                     apply(leaky_rectify).
+                     #conv_batch_norm().
+                     #apply(leaky_rectify).
 
                      custom_conv2d(128, k_h=4, k_w=4).
                      conv_batch_norm().
@@ -62,11 +62,11 @@ class RegularizedGAN(object):
 
                      custom_conv2d(256, k_h=4, k_w=4).
                      conv_batch_norm().
-                     apply(leaky_rectify).
+                     apply(leaky_rectify))
                       #custom_fully_connected(1024).
                       #fc_batch_norm().
                       #apply(leaky_rectify).
-                     custom_conv2d(512, k_h=4, k_w=4))
+                     #custom_conv2d(512, k_h=4, k_w=4))
                 self.discriminator_template = shared_template.custom_fully_connected(1)
                 self.encoder_template = \
                     (shared_template.

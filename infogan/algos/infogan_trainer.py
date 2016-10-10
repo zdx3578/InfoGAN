@@ -324,7 +324,7 @@ class InfoGANTrainer(object):
                         #pstr("all_log_vals_G",all_log_vals_G)
                         avg_log_vals_G = np.mean(np.array(all_log_vals_G), axis=0)
                         log_dict_G = dict(zip(log_keys, avg_log_vals_G))
-                        if not ganlpw%100 :
+                        if not ganlpw%300 :
                             print '-------------------------------------------------'
                             pstr('max_fake_d',log_dict_G['max_fake_d'])
                             #pstr('logdict',log_dict_G)
@@ -333,6 +333,7 @@ class InfoGANTrainer(object):
                         ganlpw += 1
                         if log_dict_G['max_fake_d'] > 0.25 :
                             ganlpw = 0
+                    pstr("ganlpw",ganlpw)
 
                     all_log_vals.append(log_vals)
                     counter += 1
