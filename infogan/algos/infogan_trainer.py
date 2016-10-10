@@ -331,7 +331,7 @@ class InfoGANTrainer(object):
                             log_line2 = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals_G))
                             print("While_G %d | " % (ganlpw) + log_line2)
                         ganlpw += 1
-                        if log_dict_G['max_fake_d'] > 0.9 :
+                        if log_dict_G['max_fake_d'] > 0.7 :
                             ganlpw = 0
 
                     all_log_vals.append(log_vals)
