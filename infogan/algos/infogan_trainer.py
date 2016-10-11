@@ -313,6 +313,8 @@ class InfoGANTrainer(object):
                     batch_images  = self.dataset.next_batch(self.batch_size)
                     feed_dict={ self.images: batch_images}
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
+                    print ' '
+                    print ' '
                     pstr("log_vals-d-run",log_vals)
                     #gencount=0
                     #for j in range(self.ganlp):
@@ -328,12 +330,12 @@ class InfoGANTrainer(object):
                         avg_log_vals_G = np.mean(np.array(all_log_vals_G), axis=0)
                         log_dict_G = dict(zip(log_keys, avg_log_vals_G))
                         if not ganlpw%300 :
-                            print '-------------------------------------------------'
+                            print ' . '
                             pstr('max_fake_d',log_dict_G['max_fake_d'])
                             log_line2 = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals_G))
                             print("While_G %d | " % (ganlpw) + log_line2)
                             now = datetime.datetime.now(dateutil.tz.tzlocal())
-                            timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
+                            timestamp = now.strftime('%Y_%m_%d : %H_%M_%S')
                             print timestamp
                         ganlpw += 1
                         ganlpw2 = ganlpw
@@ -341,13 +343,13 @@ class InfoGANTrainer(object):
                             ganlpw = 0
 
 
-                    print '-------------------------------------------------'
+                    print ' . '
                     pstr('max_fake_d',log_dict_G['max_fake_d'])
                     log_line2 = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals_G))
                     print("While_G %d | " % (ganlpw2) + log_line2)
 
                     now = datetime.datetime.now(dateutil.tz.tzlocal())
-                    timestamp = now.strftime('%Y_%m_%d_%H_%M_%S')
+                    timestamp = now.strftime('%Y_%m_%d : %H_%M_%S')
                     pstr("ganlpw",ganlpw2)
                     print timestamp
 
