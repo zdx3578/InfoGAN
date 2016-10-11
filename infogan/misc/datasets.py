@@ -62,6 +62,7 @@ class CelebADataset():
         data_directory = "./celebA"
         self._data = glob(os.path.join(data_directory, "*.jpg"))
         self._num_examples = len(self._data)
+        pstr("self._num_examples",self._num_examples)
         self._index_in_epoch = self._num_examples - 300
         self._epochs_completed = -1
 
