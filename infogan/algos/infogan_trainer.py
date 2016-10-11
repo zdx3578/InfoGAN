@@ -180,7 +180,7 @@ class InfoGANTrainer(object):
             self.discriminator_trainer = pt.apply_optimizer(discriminator_optimizer, losses=[discriminator_loss],
                                                             var_list=d_vars)
 
-            generator_optimizer = tf.train.AdamOptimizer(self.generator_learning_rate, beta1=0.5)
+            generator_optimizer = tf.train.AdamOptimizer(self.generator_learning_rate, beta1=0.1)
             self.generator_trainer = pt.apply_optimizer(generator_optimizer, losses=[generator_loss], var_list=g_vars)
 
             for k, v in self.log_vars:
