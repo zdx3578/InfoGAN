@@ -313,7 +313,7 @@ class InfoGANTrainer(object):
                     batch_images  = self.dataset.next_batch(self.batch_size)
                     feed_dict={ self.images: batch_images}
                     log_vals = sess.run([self.discriminator_trainer] + log_vars, feed_dict)[1:]
-                    #pstr("log_vals",log_vals)
+                    pstr("log_vals-d-run",log_vals)
                     #gencount=0
                     #for j in range(self.ganlp):
                     ganlpw=1
@@ -327,7 +327,7 @@ class InfoGANTrainer(object):
                         #pstr("all_log_vals_G",all_log_vals_G)
                         avg_log_vals_G = np.mean(np.array(all_log_vals_G), axis=0)
                         log_dict_G = dict(zip(log_keys, avg_log_vals_G))
-                        if not ganlpw%10000 :
+                        if not ganlpw%300 :
                             print '-------------------------------------------------'
                             pstr('max_fake_d',log_dict_G['max_fake_d'])
                             log_line2 = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals_G))
