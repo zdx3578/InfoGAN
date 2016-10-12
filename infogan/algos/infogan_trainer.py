@@ -334,7 +334,7 @@ class InfoGANTrainer(object):
                             print ' . '
                             pstr('max_fake_d',log_dict_G['max_fake_d'])
                             log_line2 = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals_G))
-                            print("While_G %d | " % (epoch) + (ganlpw) + log_line2)
+                            print("While_G %d  %d| " % (epoch) + (ganlpw) + log_line2)
                             now = datetime.datetime.now(dateutil.tz.tzlocal())
                             timestamp = now.strftime('%Y_%m_%d : %H_%M_%S')
                             print timestamp
@@ -347,7 +347,7 @@ class InfoGANTrainer(object):
                     print ' . '
                     pstr('max_fake_d',log_dict_G['max_fake_d'])
                     log_line2 = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals_G))
-                    print("While_G %d | " % (epoch) + (ganlpw2) + log_line2)
+                    print("While_G %d  %d | " % (epoch) + (ganlpw2) + log_line2)
 
                     now = datetime.datetime.now(dateutil.tz.tzlocal())
                     timestamp = now.strftime('%Y_%m_%d : %H_%M_%S')
