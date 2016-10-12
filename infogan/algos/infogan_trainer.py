@@ -180,7 +180,7 @@ class InfoGANTrainer(object):
             self.discriminator_trainer = pt.apply_optimizer(discriminator_optimizer, losses=[discriminator_loss],
                                                             var_list=d_vars)
 
-            generator_optimizer = tf.train.AdamOptimizer(self.generator_learning_rate, beta1=0.1, epsilon=0.1)
+            generator_optimizer = tf.train.AdamOptimizer(self.generator_learning_rate, beta1=0.1,epsilon=1e-512)
             self.generator_trainer = pt.apply_optimizer(generator_optimizer, losses=[generator_loss], var_list=g_vars)
 
             for k, v in self.log_vars:
@@ -323,6 +323,7 @@ class InfoGANTrainer(object):
                     all_log_vals_G = []
                     while ganlpw :
                         log_vals_G = sess.run([self.generator_trainer] + log_vars, feed_dict)
+                        ganlpw += 1
                         #pstr("log_vals_G",log_vals_G)
                         log_vals_G = log_vals_G[1:]
                         #pstr("log_vals_G",log_vals_G)
@@ -330,24 +331,24 @@ class InfoGANTrainer(object):
                         #pstr("all_log_vals_G",all_log_vals_G)
                         avg_log_vals_G = np.mean(np.array(all_log_vals_G), axis=0)
                         log_dict_G = dict(zip(log_keys, avg_log_vals_G))
-                        if not ganlpw%300 :
+                        if not ganlpw%3 :
                             print ' . '
                             pstr('max_fake_d',log_dict_G['max_fake_d'])
                             log_line2 = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals_G))
-                            print("While_G %d  %d| " % (epoch) + (ganlpw) + log_line2)
+                            print("While_G  epoch -%d ganlpw -%d |  " % (epoch , ganlpw )) + log_line2
                             now = datetime.datetime.now(dateutil.tz.tzlocal())
                             timestamp = now.strftime('%Y_%m_%d : %H_%M_%S')
                             print timestamp
-                        ganlpw += 1
+                        
                         ganlpw2 = ganlpw
-                        if log_dict_G['max_fake_d'] > 0.2 :
+                        if log_dict_G['max_fake_d'] > 0.7 :
                             ganlpw = 0
 
 
                     print ' . '
                     pstr('max_fake_d',log_dict_G['max_fake_d'])
                     log_line2 = "; ".join("%s: %s" % (str(k), str(v)) for k, v in zip(log_keys, avg_log_vals_G))
-                    print("While_G %d  %d | " % (epoch) + (ganlpw2) + log_line2)
+                    print("While_G  ganlpw2 %d |  " % ( ganlpw2 )) + log_line2
 
                     now = datetime.datetime.now(dateutil.tz.tzlocal())
                     timestamp = now.strftime('%Y_%m_%d : %H_%M_%S')
