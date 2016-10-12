@@ -180,7 +180,7 @@ class InfoGANTrainer(object):
             self.discriminator_trainer = pt.apply_optimizer(discriminator_optimizer, losses=[discriminator_loss],
                                                             var_list=d_vars)
 
-            generator_optimizer = tf.train.AdamOptimizer(self.generator_learning_rate, beta1=0.1,epsilon=1e-512)
+            generator_optimizer = tf.train.AdamOptimizer(self.generator_learning_rate, beta1=0.1,epsilon=1e-128)
             self.generator_trainer = pt.apply_optimizer(generator_optimizer, losses=[generator_loss], var_list=g_vars)
 
             for k, v in self.log_vars:
@@ -341,7 +341,7 @@ class InfoGANTrainer(object):
                             print timestamp
                         
                         ganlpw2 = ganlpw
-                        if log_dict_G['max_fake_d'] > 0.7 :
+                        if log_dict_G['max_fake_d'] > 0.4 :
                             ganlpw = 0
 
 
