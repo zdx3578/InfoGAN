@@ -21,8 +21,8 @@ if __name__ == "__main__":
     root_checkpoint_dir = "ckt/mnist"
     
     #!!!!!
-    #batch_size = 128
-    batch_size = 1024
+    batch_size = 128
+    #batch_size = 1024
     #updates_per_epoch = 50
     updates_per_epoch = 1
     max_epoch = 1301
@@ -46,18 +46,19 @@ if __name__ == "__main__":
     dataset = CelebADataset()
 
     latent_spec = [
-        (Uniform(128), False),
-        (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
-        (Categorical(10), True),
+        (Uniform(218), False),
         (Categorical(10), True),
     ]
+     #   (Categorical(10), True),
+      #  (Categorical(10), True),
+       # (Categorical(10), True),
+        #(Categorical(10), True),
+#        (Categorical(10), True),
+ #       (Categorical(10), True),
+  #      (Categorical(10), True),
+   #     (Categorical(10), True),
+    #    (Categorical(10), True),
+    #]
 
 #        (Uniform(11, fix_std=True), True),
 #        (Uniform(11, fix_std=True), True),
