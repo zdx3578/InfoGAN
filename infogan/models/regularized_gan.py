@@ -123,8 +123,8 @@ class RegularizedGAN(object):
 
     def discriminate(self, x_var):
         d_out = self.discriminator_template.construct(input=x_var)
-        #d = tf.nn.sigmoid(d_out[:, 0])
-        d = tf.nn.sigmoid(d_out)
+        d = tf.nn.sigmoid(d_out[:, 0])
+        #d = tf.nn.sigmoid(d_out)
         reg_dist_flat = self.encoder_template.construct(input=x_var)
         reg_dist_info = self.reg_latent_dist.activate_dist(reg_dist_flat)
         return d, self.reg_latent_dist.sample(reg_dist_info), reg_dist_info, reg_dist_flat, d_out
