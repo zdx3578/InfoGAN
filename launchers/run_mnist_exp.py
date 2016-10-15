@@ -46,7 +46,7 @@ if __name__ == "__main__":
     dataset = CelebADataset()
 
     latent_spec = [
-        (Uniform(10), False),
+        (Uniform(510), False),
         (Categorical(10), True),
     ]
      #   (Categorical(10), True),
