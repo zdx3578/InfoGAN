@@ -151,7 +151,7 @@ class InfoGANTrainer(object):
                 cross_ent += cont_cross_ent
                 self.log_vars.append(("MI_cont", cont_mi_est))
                 self.log_vars.append(("CrossEnt_cont", cont_cross_ent))
-                discriminator_loss -= self.info_reg_coeff * cont_mi_est
+                discriminator_loss -= 10 * cont_mi_est
                 generator_loss -= self.info_reg_coeff * cont_mi_est
 
             pstr('1.1 generator_loss',generator_loss)
@@ -176,11 +176,11 @@ class InfoGANTrainer(object):
             self.log_vars.append(("max_fake_d", tf.reduce_max(fake_d)))
             self.log_vars.append(("min_fake_d", tf.reduce_min(fake_d)))
 
-            discriminator_optimizer = tf.train.AdamOptimizer(self.discriminator_learning_rate, beta1=0.5)
+            discriminator_optimizer = tf.train.AdamOptimizer(self.discriminator_learning_rate, beta1=0.1)
             self.discriminator_trainer = pt.apply_optimizer(discriminator_optimizer, losses=[discriminator_loss],
                                                             var_list=d_vars)
 
-            generator_optimizer = tf.train.AdamOptimizer(self.generator_learning_rate, beta1=0.5,epsilon=1e-128)
+            generator_optimizer = tf.train.AdamOptimizer(self.generator_learning_rate, beta1=0.1,epsilon=1e-1024)
             self.generator_trainer = pt.apply_optimizer(generator_optimizer, losses=[generator_loss], var_list=g_vars)
 
             for k, v in self.log_vars:
