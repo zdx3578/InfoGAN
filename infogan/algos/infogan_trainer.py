@@ -341,7 +341,7 @@ class InfoGANTrainer(object):
                             print timestamp
                         
                         ganlpw2 = ganlpw
-                        if log_dict_G['max_fake_d'] > 0.5 or ganlpw > 100 :
+                        if log_dict_G['max_fake_d'] > 0.5 or ganlpw > 300 :
                         #if ganlpw > 2 :
                             ganlpw = 0
 
