@@ -4,6 +4,9 @@ from prettytensor.pretty_tensor_class import Phase
 import numpy as np
 
 
+
+
+
 class conv_batch_norm(pt.VarStoreMethod):
     """Code modification of http://stackoverflow.com/a/33950177"""
 
@@ -57,6 +60,9 @@ def leaky_rectify(x, leakiness=0.01):
     # import ipdb; ipdb.set_trace()
     return ret
 
+#from dcgan
+def leaky_rectify2(x, leak=0.2, name="lrelu"):
+    return tf.maximum(x, leak*x)
 
 @pt.Register
 class custom_conv2d(pt.VarStoreMethod):

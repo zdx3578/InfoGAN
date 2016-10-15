@@ -2,10 +2,11 @@ from infogan.misc.distributions import Product, Distribution, Gaussian, Categori
 import prettytensor as pt
 import tensorflow as tf
 import infogan.misc.custom_ops
-from infogan.misc.custom_ops import leaky_rectify
+from infogan.misc.custom_ops import leaky_rectify, leaky_rectify2
 
 from infogan.misc.utils import *
 from infogan.misc.utilsdcgan import *
+from infogan.misc.ops import *
 
 
 class RegularizedGAN(object):
@@ -54,19 +55,26 @@ class RegularizedGAN(object):
                      reshape([-1] + list(image_shape)).
                      custom_conv2d(64, k_h=4, k_w=4).
                      #conv_batch_norm().
-                     #apply(leaky_rectify).
+                     apply(leaky_rectify2).
 
                      custom_conv2d(128, k_h=4, k_w=4).
                      conv_batch_norm().
-                     apply(leaky_rectify).
+                     apply(leaky_rectify2).
 
                      custom_conv2d(256, k_h=4, k_w=4).
                      conv_batch_norm().
-                     apply(leaky_rectify))
-                      #custom_fully_connected(1024).
-                      #fc_batch_norm().
-                      #apply(leaky_rectify).
-                     #custom_conv2d(512, k_h=4, k_w=4))
+                     apply(leaky_rectify2).
+
+                     #custom_fully_connected(1024).
+                     #fc_batch_norm().
+                     #apply(leaky_rectify).
+                     custom_conv2d(512, k_h=4, k_w=4).
+                     conv_batch_norm().
+                     #apply(leaky_rectify2))
+
+                     #linear
+
+                     apply(tf.nn.sigmoid))
                 self.discriminator_template = shared_template.custom_fully_connected(1)
                 self.encoder_template = \
                     (shared_template.
@@ -115,11 +123,11 @@ class RegularizedGAN(object):
 
     def discriminate(self, x_var):
         d_out = self.discriminator_template.construct(input=x_var)
-        d = tf.nn.sigmoid(d_out[:, 0])
-        #d = tf.nn.sigmoid(d_out)
+        #d = tf.nn.sigmoid(d_out[:, 0])
+        d = tf.nn.sigmoid(d_out)
         reg_dist_flat = self.encoder_template.construct(input=x_var)
         reg_dist_info = self.reg_latent_dist.activate_dist(reg_dist_flat)
-        return d, self.reg_latent_dist.sample(reg_dist_info), reg_dist_info, reg_dist_flat 
+        return d, self.reg_latent_dist.sample(reg_dist_info), reg_dist_info, reg_dist_flat, d_out
 
     def generate(self, z_var):
         x_dist_flat = self.generator_template.construct(input=z_var)
